@@ -26,5 +26,5 @@ jobs:
       - name: Restore
         run: dotnet restore
         
-      - name: Build Docker images
+      - name: Build
         run: dotnet build --configuration Release --no-restore
