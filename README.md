@@ -36,3 +36,7 @@ All the individual microservices can run independently, and all follow the same 
 4. You can switch out either `make local-api` or `make local-worker` with starting the application inside your IDE in debug mode
 
 This will run the individual microservice locally.
+
+### References
+
+* [Original](https://github.com/Dometrain/zero-to-hero-event-driven-architecture/tree/main/module6)
