@@ -8,7 +8,7 @@ namespace PlantBasedPizza.OrderManager.Infrastructure;
 public record TakePaymentRequest
 {
     [JsonPropertyName("OrderIdentifier")]
-    public string OrderIdentifier { get; set; }
+    public required string OrderIdentifier { get; set; }
 
     [JsonPropertyName("PaymentAmount")]
     public decimal PaymentAmount { get; set; }
@@ -18,7 +18,7 @@ public record TakePaymentRequest
 public record RefundPaymentRequest
 {
     [JsonPropertyName("OrderIdentifier")]
-    public string OrderIdentifier { get; set; }
+    public required string OrderIdentifier { get; set; }
 
     [JsonPropertyName("PaymentAmount")]
     public decimal PaymentAmount { get; set; }

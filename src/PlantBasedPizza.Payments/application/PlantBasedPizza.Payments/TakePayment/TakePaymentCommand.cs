@@ -11,7 +11,7 @@ public class TakePaymentCommand : IntegrationEvent
     public override Uri Source => new Uri("https://orders.plantbasedpizza");
 
     [JsonPropertyName("OrderIdentifier")]
-    public string OrderIdentifier { get; set; }
+    public required string OrderIdentifier { get; set; }
 
     [JsonPropertyName("TakePayment")]
     public decimal PaymentAmount { get; set; }

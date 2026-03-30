@@ -46,7 +46,7 @@ public class OrdersTestDriver
 
         if (!response.IsSuccessStatusCode) throw new Exception($"Request failed: {response.StatusCode}");
 
-        return JsonSerializer.Deserialize<Order>(await response.Content.ReadAsStringAsync());
+        return JsonSerializer.Deserialize<Order>(await response.Content.ReadAsStringAsync())!;
     }
 
     public async Task<Order> AddNewPickupOrder(string customerIdentifier)
@@ -62,7 +62,7 @@ public class OrdersTestDriver
 
         if (!response.IsSuccessStatusCode) throw new Exception($"Request failed: {response.StatusCode}");
 
-        return JsonSerializer.Deserialize<Order>(await response.Content.ReadAsStringAsync());
+        return JsonSerializer.Deserialize<Order>(await response.Content.ReadAsStringAsync())!;
     }
 
     public async Task AddItemToOrder(string orderIdentifier, string recipeIdentifier, int quantity)
@@ -132,7 +132,7 @@ public class OrdersTestDriver
 
         if (!response.IsSuccessStatusCode) throw new Exception($"Request failed: {response.StatusCode}");
 
-        var order = JsonSerializer.Deserialize<Order>(await response.Content.ReadAsStringAsync());
+        var order = JsonSerializer.Deserialize<Order>(await response.Content.ReadAsStringAsync())!;
 
         return order;
     }

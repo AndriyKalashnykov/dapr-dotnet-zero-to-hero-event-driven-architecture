@@ -5,7 +5,7 @@ namespace PlantBasedPizza.LoyaltyPoints.IntegrationTest.ViewModels;
 public class LoyaltyPointsDto
 {
     [JsonPropertyName("customerIdentifier")]
-    public string CustomerIdentifier { get; set; }
+    public required string CustomerIdentifier { get; set; }
 
     [JsonPropertyName("totalPoints")]
     public decimal TotalPoints { get; set; }

@@ -24,7 +24,7 @@ namespace PlantBasedPizza.Deliver.Core.Entities
         public bool AwaitingCollection => !DriverCollectedOn.HasValue;
 
         [JsonPropertyName("deliveryAddress")]
-        public Address DeliveryAddress { get; private set; }
+        public Address DeliveryAddress { get; private set; } = default!;
 
         [JsonPropertyName("driverCollectedOn")]
         public DateTime? DriverCollectedOn { get; private set; }

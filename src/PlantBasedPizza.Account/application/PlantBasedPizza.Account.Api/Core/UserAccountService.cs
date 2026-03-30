@@ -76,7 +76,7 @@ public class UserAccountService
     {
         try
         {
-            UserAccount? userAccount = null;
+            UserAccount userAccount;
 
             switch (accountType)
             {
@@ -94,6 +94,8 @@ public class UserAccountService
 
                     userAccount = UserAccount.Create(request.EmailAddress, request.Password, AccountType.Staff);
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(accountType), accountType, "Unsupported account type");
             }
 
             await _userAccountRepository.CreateAccount(userAccount);

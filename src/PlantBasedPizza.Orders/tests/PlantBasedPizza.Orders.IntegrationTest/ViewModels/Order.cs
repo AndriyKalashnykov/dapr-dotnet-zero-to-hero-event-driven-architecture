@@ -5,9 +5,9 @@ namespace PlantBasedPizza.Orders.IntegrationTest.ViewModels
     public class Order
     {
         [JsonPropertyName("orderIdentifier")]
-        public string OrderIdentifier { get; set; }
+        public string OrderIdentifier { get; set; } = string.Empty;
 
-        public string OrderNumber { get; set; }
+        public string OrderNumber { get; set; } = string.Empty;
 
         public DateTime OrderDate { get; set; }
 
@@ -16,16 +16,16 @@ namespace PlantBasedPizza.Orders.IntegrationTest.ViewModels
         public DateTime? OrderCompletedOn { get; set; }
 
         [JsonPropertyName("items")]
-        public List<OrderItem> Items { get; set; }
+        public List<OrderItem> Items { get; set; } = [];
 
         [JsonPropertyName("history")]
-        public List<OrderHistory> History { get; set; }
+        public List<OrderHistory> History { get; set; } = [];
 
         public int OrderType { get; set; }
 
         [JsonPropertyName("customerIdentifier")]
 
-        public string CustomerIdentifier { get; set; }
+        public string CustomerIdentifier { get; set; } = string.Empty;
 
         public decimal TotalPrice { get; set; }
 

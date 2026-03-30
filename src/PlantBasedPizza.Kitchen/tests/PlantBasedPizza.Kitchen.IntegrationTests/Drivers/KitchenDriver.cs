@@ -56,7 +56,7 @@ public class KitchenDriver
 
         if (!result.IsSuccessStatusCode) throw new Exception("Failure retrieving new kitchen orders");
 
-        return JsonSerializer.Deserialize<List<KitchenRequestDto>>(await result.Content.ReadAsStringAsync());
+        return JsonSerializer.Deserialize<List<KitchenRequestDto>>(await result.Content.ReadAsStringAsync())!;
     }
 
     public async Task<List<KitchenRequestDto>> GetPreparing()
@@ -66,7 +66,7 @@ public class KitchenDriver
         var kitchenRequests =
             JsonSerializer.Deserialize<List<KitchenRequestDto>>(await result.Content.ReadAsStringAsync());
 
-        return kitchenRequests;
+        return kitchenRequests!;
     }
 
     public async Task<List<KitchenRequestDto>> GetNew()
@@ -77,7 +77,7 @@ public class KitchenDriver
         var kitchenRequests =
             JsonSerializer.Deserialize<List<KitchenRequestDto>>(await result.Content.ReadAsStringAsync());
 
-        return kitchenRequests;
+        return kitchenRequests!;
     }
 
     public async Task<List<KitchenRequestDto>> GetBaking()
@@ -88,7 +88,7 @@ public class KitchenDriver
         var kitchenRequests =
             JsonSerializer.Deserialize<List<KitchenRequestDto>>(await result.Content.ReadAsStringAsync());
 
-        return kitchenRequests;
+        return kitchenRequests!;
     }
 
     public async Task<List<KitchenRequestDto>> GetQualityChecked()
@@ -99,7 +99,7 @@ public class KitchenDriver
         var kitchenRequests =
             JsonSerializer.Deserialize<List<KitchenRequestDto>>(await result.Content.ReadAsStringAsync());
 
-        return kitchenRequests;
+        return kitchenRequests!;
     }
 
     public async Task Preparing(string orderIdentifier)

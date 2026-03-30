@@ -61,7 +61,7 @@ var defaultMethodConfig = new MethodConfig
 
 builder.Services.AddGrpcClient<Orders.OrdersClient>(o =>
     {
-        o.Address = new Uri(builder.Configuration["Services:OrdersInternal"]);
+        o.Address = new Uri(builder.Configuration["Services:OrdersInternal"] ?? "http://localhost");
     })
     .ConfigureChannel((provider, channel) =>
     {

@@ -41,27 +41,27 @@ public class OutboxWorker : BackgroundService
                     switch (outboxItem.EventType)
                     {
                         case nameof(KitchenConfirmedOrderEventV1):
-                            var orderConfirmedEvt = JsonSerializer.Deserialize<KitchenConfirmedOrderEventV1>(outboxItem.EventData);
+                            var orderConfirmedEvt = JsonSerializer.Deserialize<KitchenConfirmedOrderEventV1>(outboxItem.EventData)!;
                             await _eventPublisher.PublishKitchenConfirmedOrderEventV1(orderConfirmedEvt);
                             outboxItem.Processed = true;
                             break;
                         case nameof(OrderPreparingEventV1):
-                            var orderPreparingEventV1 = JsonSerializer.Deserialize<OrderPreparingEventV1>(outboxItem.EventData);
+                            var orderPreparingEventV1 = JsonSerializer.Deserialize<OrderPreparingEventV1>(outboxItem.EventData)!;
                             await _eventPublisher.PublishOrderPreparingEventV1(orderPreparingEventV1);
                             outboxItem.Processed = true;
                             break;
                         case nameof(OrderPrepCompleteEventV1):
-                            var orderPrepCompleteEventV1 = JsonSerializer.Deserialize<OrderPrepCompleteEventV1>(outboxItem.EventData);
+                            var orderPrepCompleteEventV1 = JsonSerializer.Deserialize<OrderPrepCompleteEventV1>(outboxItem.EventData)!;
                             await _eventPublisher.PublishOrderPrepCompleteEventV1(orderPrepCompleteEventV1);
                             outboxItem.Processed = true;
                             break;
                         case nameof(OrderBakedEventV1):
-                            var orderBakedEventV1 = JsonSerializer.Deserialize<OrderBakedEventV1>(outboxItem.EventData);
+                            var orderBakedEventV1 = JsonSerializer.Deserialize<OrderBakedEventV1>(outboxItem.EventData)!;
                             await _eventPublisher.PublishOrderBakedEventV1(orderBakedEventV1);
                             outboxItem.Processed = true;
                             break;
                         case nameof(OrderQualityCheckedEventV1):
-                            var orderQualityCheckedEventV1 = JsonSerializer.Deserialize<OrderQualityCheckedEventV1>(outboxItem.EventData);
+                            var orderQualityCheckedEventV1 = JsonSerializer.Deserialize<OrderQualityCheckedEventV1>(outboxItem.EventData)!;
                             await _eventPublisher.PublishOrderQualityCheckedEventV1(orderQualityCheckedEventV1);
                             outboxItem.Processed = true;
                             break;

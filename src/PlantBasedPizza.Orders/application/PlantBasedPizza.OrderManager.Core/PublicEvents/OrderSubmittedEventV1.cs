@@ -11,7 +11,7 @@ public class OrderSubmittedEventV1 : IntegrationEvent
     public override Uri Source => new Uri("https://orders.plantbasedpizza");
 
     [JsonPropertyName("OrderIdentifier")]
-    public string OrderIdentifier { get; init; }
+    public required string OrderIdentifier { get; init; }
 
     public override string AsString()
     {

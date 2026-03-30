@@ -4,9 +4,9 @@ namespace PlantBasedPizza.LoyaltyPoints.Worker;
 
 public class OrderCompletedEvent : IntegrationEvent
 {
-    public string OrderIdentifier { get; set; }
+    public required string OrderIdentifier { get; set; }
 
-    public string CustomerIdentifier { get; set; }
+    public required string CustomerIdentifier { get; set; }
 
     public decimal OrderValue { get; set; }
     public override string EventName => "order.orderCompleted";

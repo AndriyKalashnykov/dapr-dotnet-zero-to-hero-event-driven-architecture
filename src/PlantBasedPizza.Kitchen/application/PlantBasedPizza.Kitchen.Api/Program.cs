@@ -39,7 +39,7 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = builder.Configuration["Auth:Issuer"],
         ValidAudience = builder.Configuration["Auth:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey
-            (Encoding.UTF8.GetBytes(builder.Configuration["Auth:Key"])),
+            (Encoding.UTF8.GetBytes(builder.Configuration["Auth:Key"] ?? string.Empty)),
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = false,

@@ -19,7 +19,7 @@ public class OrderCompletedIntegrationEventV2 : IntegrationEvent
 
     public string CustomerIdentifier { get; set; } = "";
 
-    public OrderValue OrderValue { get; set; }
+    public required OrderValue OrderValue { get; set; }
 
     public override string AsString()
     {

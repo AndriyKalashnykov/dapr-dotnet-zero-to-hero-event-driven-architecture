@@ -43,43 +43,43 @@ public class OutboxWorker : BackgroundService
                     {
                         case nameof(OrderCompletedIntegrationEventV1):
                             var orderCompletedIntegrationEvt =
-                                JsonSerializer.Deserialize<OrderCompletedIntegrationEventV1>(outboxItem.EventData);
+                                JsonSerializer.Deserialize<OrderCompletedIntegrationEventV1>(outboxItem.EventData)!;
                             await _eventPublisher.PublishOrderCompletedEventV1(orderCompletedIntegrationEvt);
                             outboxItem.Processed = true;
                             break;
                         case nameof(OrderCompletedIntegrationEventV2):
                             var orderCompletedIntegrationEvtV2 =
-                                JsonSerializer.Deserialize<OrderCompletedIntegrationEventV2>(outboxItem.EventData);
+                                JsonSerializer.Deserialize<OrderCompletedIntegrationEventV2>(outboxItem.EventData)!;
                             await _eventPublisher.PublishOrderCompletedEventV2(orderCompletedIntegrationEvtV2);
                             outboxItem.Processed = true;
                             break;
                         case nameof(OrderReadyForDeliveryEventV1):
                             var orderReadyForDeliveryEvt =
-                                JsonSerializer.Deserialize<OrderReadyForDeliveryEventV1>(outboxItem.EventData);
+                                JsonSerializer.Deserialize<OrderReadyForDeliveryEventV1>(outboxItem.EventData)!;
                             await _eventPublisher.PublishOrderReadyForDeliveryEventV1(orderReadyForDeliveryEvt);
                             outboxItem.Processed = true;
                             break;
                         case nameof(OrderConfirmedEventV1):
                             var orderSubmittedEvt =
-                                JsonSerializer.Deserialize<OrderConfirmedEventV1>(outboxItem.EventData);
+                                JsonSerializer.Deserialize<OrderConfirmedEventV1>(outboxItem.EventData)!;
                             await _eventPublisher.PublishOrderConfirmedEventV1(orderSubmittedEvt);
                             outboxItem.Processed = true;
                             break;
                         case nameof(OrderCreatedEventV1):
                             var orderCreatedEvent =
-                                JsonSerializer.Deserialize<OrderCreatedEventV1>(outboxItem.EventData);
+                                JsonSerializer.Deserialize<OrderCreatedEventV1>(outboxItem.EventData)!;
                             await _eventPublisher.PublishOrderCreatedEventV1(orderCreatedEvent);
                             outboxItem.Processed = true;
                             break;
                         case nameof(OrderSubmittedEventV1):
                             var submittedEvent =
-                                JsonSerializer.Deserialize<OrderSubmittedEventV1>(outboxItem.EventData);
+                                JsonSerializer.Deserialize<OrderSubmittedEventV1>(outboxItem.EventData)!;
                             await _eventPublisher.PublishOrderSubmittedEventV1(submittedEvent);
                             outboxItem.Processed = true;
                             break;
                         case nameof(OrderCancelledEventV1):
                             var cancelledEvent =
-                                JsonSerializer.Deserialize<OrderCancelledEventV1>(outboxItem.EventData);
+                                JsonSerializer.Deserialize<OrderCancelledEventV1>(outboxItem.EventData)!;
                             await _eventPublisher.PublishOrderCancelledEventV1(cancelledEvent);
                             outboxItem.Processed = true;
                             break;

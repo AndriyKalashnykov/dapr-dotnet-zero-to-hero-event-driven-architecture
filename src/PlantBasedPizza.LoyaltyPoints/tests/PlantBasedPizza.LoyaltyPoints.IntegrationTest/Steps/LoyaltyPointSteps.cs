@@ -33,6 +33,6 @@ public sealed class LoyaltyPointSteps
         var points = await _driver.GetLoyaltyPoints();
         var internalPoints = await _driver.GetLoyaltyPointsInternal();
 
-        points.TotalPoints.Should().BeGreaterThanOrEqualTo(totalPoints);
+        points!.TotalPoints.Should().BeGreaterThanOrEqualTo(totalPoints);
     }
 }

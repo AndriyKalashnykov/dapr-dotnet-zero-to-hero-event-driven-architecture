@@ -18,7 +18,7 @@ namespace PlantBasedPizza.Deliver.Infrastructure
             _outboxItems = database.GetCollection<OutboxItem>("DeliveryRequests_outboxitems");
         }
 
-        public async Task AddNewDeliveryRequest(DeliveryRequest request, List<IntegrationEvent> events = null)
+        public async Task AddNewDeliveryRequest(DeliveryRequest request, List<IntegrationEvent>? events = null)
         {
             await _collection.InsertOneAsync(request).ConfigureAwait(false);
 
@@ -33,7 +33,7 @@ namespace PlantBasedPizza.Deliver.Infrastructure
             }
         }
 
-        public async Task UpdateDeliveryRequest(DeliveryRequest request, List<IntegrationEvent> events = null)
+        public async Task UpdateDeliveryRequest(DeliveryRequest request, List<IntegrationEvent>? events = null)
         {
             var queryBuilder = Builders<DeliveryRequest>.Filter.Eq(ord => ord.OrderIdentifier, request.OrderIdentifier);
 

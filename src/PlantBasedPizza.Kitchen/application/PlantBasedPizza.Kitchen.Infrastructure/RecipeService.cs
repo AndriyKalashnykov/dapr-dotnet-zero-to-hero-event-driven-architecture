@@ -28,7 +28,7 @@ namespace PlantBasedPizza.Kitchen.Infrastructure
             if (cachedRecipe != null)
             {
                 Activity.Current?.AddTag("cache_hit", true);
-                return JsonSerializer.Deserialize<RecipeAdapter>(cachedRecipe);
+                return JsonSerializer.Deserialize<RecipeAdapter>(cachedRecipe)!;
             }
 
             var recipeResult = await _httpClient.GetAsync($"http://{_serviceEndpoints.Recipes}/recipes/{recipeIdentifier}");
@@ -39,7 +39,7 @@ namespace PlantBasedPizza.Kitchen.Infrastructure
 
             await _distributedCache.SetStringAsync(recipeIdentifier, recipeData);
 
-            return recipe;
+            return recipe!;
         }
     }
 }

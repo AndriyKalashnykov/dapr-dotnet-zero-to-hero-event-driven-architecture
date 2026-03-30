@@ -142,7 +142,7 @@ public class EventDriver
 
 record InvalidPaymentSuccessEvent
 {
-    public string OrderId { get; set; }
+    public required string OrderId { get; set; }
 
     public decimal Money { get; set; }
 }

@@ -48,16 +48,16 @@ public record OrderDto
     public OrderType OrderType { get; set; }
 
     [JsonPropertyName("customerIdentifier")]
-    public string CustomerIdentifier { get; set; }
+    public string CustomerIdentifier { get; set; } = string.Empty;
 
     [JsonPropertyName("orderIdentifier")]
-    public string OrderIdentifier { get; set; }
+    public string OrderIdentifier { get; set; } = string.Empty;
 
     [JsonPropertyName("totalPrice")]
     public decimal TotalPrice { get; set; }
 
     [JsonPropertyName("orderNumber")]
-    public string OrderNumber { get; set; }
+    public string OrderNumber { get; set; } = string.Empty;
 
     [JsonPropertyName("deliveryDetails")]
     public DeliveryDetailsDto? DeliveryDetails { get; set; }
@@ -75,8 +75,8 @@ public record OrderDto
     public DateTime? OrderCompletedOn { get; set; }
 
     [JsonPropertyName("items")]
-    public List<OrderItemDto> Items { get; set; }
+    public List<OrderItemDto> Items { get; set; } = [];
 
     [JsonPropertyName("history")]
-    public List<OrderHistoryDto> History { get; set; }
+    public List<OrderHistoryDto> History { get; set; } = [];
 }

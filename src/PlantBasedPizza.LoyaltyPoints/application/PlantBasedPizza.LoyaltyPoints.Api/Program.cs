@@ -27,7 +27,7 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = builder.Configuration["Auth:Issuer"],
         ValidAudience = builder.Configuration["Auth:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey
-            (Encoding.UTF8.GetBytes(builder.Configuration["Auth:Key"])),
+            (Encoding.UTF8.GetBytes(builder.Configuration["Auth:Key"] ?? string.Empty)),
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = false,
@@ -64,7 +64,7 @@ app.MapGet("/loyalty", async (ClaimsPrincipal user) =>
 {
     var accountId = user.Claims.ExtractAccountId();
 
-    var loyalty = await loyaltyRepo.GetCurrentPointsFor(accountId);
+    var loyalty = await loyaltyRepo.GetCurrentPointsFor(accountId ?? string.Empty);
 
     if (loyalty == null)
     {

@@ -19,7 +19,9 @@ public static class Setup
             services.AddMomentoCache(options =>
             {
                 options.Configuration = Configurations.InRegion.LowLatency.Latest();
+#pragma warning disable CS0618 // StringMomentoTokenProvider deprecated but ApiKeyV2TokenProvider requires endpoint
                 options.CredentialProvider = new StringMomentoTokenProvider(momentoApiKey);
+#pragma warning restore CS0618
                 options.DefaultTtl = TimeSpan.FromMinutes(1);
                 options.CacheName = cacheName;
             });

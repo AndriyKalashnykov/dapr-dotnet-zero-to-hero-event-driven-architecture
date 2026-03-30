@@ -55,7 +55,7 @@ public class OrderProcessingWorkflow : IOrderWorkflow
 
         await WaitForKitchen();
 
-        if (order.OrderType == OrderType.Delivery)
+        if (order!.OrderType == OrderType.Delivery)
             await WaitForDelivery();
         else
             await WaitForCollection();

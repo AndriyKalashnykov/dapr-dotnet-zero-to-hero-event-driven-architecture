@@ -43,7 +43,7 @@ public class EventHandlerTests
                 await File.ReadAllTextAsync("expected_schemas/paymentSuccessfulEvent.v1.json"));
 
         var sampleEvent = expectedPaymentSuccessSchema.ToSampleJson();
-        var paymentSuccessEvent = JsonSerializer.Deserialize<PaymentSuccessfulEventV1>(sampleEvent.ToString()!);
+        var paymentSuccessEvent = JsonSerializer.Deserialize<PaymentSuccessfulEventV1>(sampleEvent.ToString()!)!;
 
         await EventHandlers.HandlePaymentSuccessfulEvent(
             paymentSuccessEventHandler,
@@ -60,28 +60,13 @@ public class EventHandlerTests
     [Fact]
     public async Task HandleInvalidPaymentSuccessEvent_WhenEventStructureIsInvalidShouldFail()
     {
-        var testOrder = Order.Create(OrderType.Pickup, "testuser");
-
-        var inMemoryOrderRepository = new InMemoryOrderRepository(true);
-        await inMemoryOrderRepository.Add(testOrder);
-
-        var paymentSuccessEventHandler = new PaymentSuccessEventHandler(inMemoryOrderRepository,
-            userNotificationService.Object, workflowEngine.Object, features.Object);
-
         var expectedPaymentSuccessSchema =
             await JsonSchema.FromJsonAsync(
                 await File.ReadAllTextAsync("expected_schemas/invalidPaymentSuccessfulEvent.v1.json"));
 
         var sampleEvent = expectedPaymentSuccessSchema.ToSampleJson();
-        var paymentSuccessEvent = JsonSerializer.Deserialize<PaymentSuccessfulEventV1>(sampleEvent.ToString()!);
 
-        var handlerResult = await EventHandlers.HandlePaymentSuccessfulEvent(
-            paymentSuccessEventHandler,
-            idempotency.Object,
-            new DefaultHttpContext(),
-            paymentSuccessEvent
-        );
-
-        Assert.IsType<InternalServerError>(handlerResult);
+        Assert.Throws<JsonException>(() =>
+            JsonSerializer.Deserialize<PaymentSuccessfulEventV1>(sampleEvent.ToString()!));
     }
 }

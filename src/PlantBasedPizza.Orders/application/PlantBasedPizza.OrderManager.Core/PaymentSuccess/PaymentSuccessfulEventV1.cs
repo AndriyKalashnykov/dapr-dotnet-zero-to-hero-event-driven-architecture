@@ -14,7 +14,7 @@ public class PaymentSuccessfulEventV1 : IntegrationEvent
     [JsonIgnore]
     public override Uri Source => new("https://payments.plantbasedpizza.com");
 
-    public string OrderIdentifier { get; init; }
+    public required string OrderIdentifier { get; init; }
 
     public decimal Amount { get; init; }
 }

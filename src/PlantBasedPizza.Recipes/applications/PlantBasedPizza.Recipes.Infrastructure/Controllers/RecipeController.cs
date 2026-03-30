@@ -35,7 +35,7 @@ namespace PlantBasedPizza.Recipes.Infrastructure.Controllers
         /// <param name="recipeIdentifier">The identifier of the recipe to get.</param>
         /// <returns></returns>
         [HttpGet("{recipeIdentifier}")]
-        public async Task<Recipe> Get(string recipeIdentifier)
+        public async Task<Recipe?> Get(string recipeIdentifier)
         {
             return await _recipeRepository.Retrieve(recipeIdentifier);
         }

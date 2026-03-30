@@ -20,6 +20,8 @@ public class AddItemToOrderHandler
         {
             var recipe = await _recipeService.GetRecipe(command.RecipeIdentifier);
 
+            if (recipe is null) return null;
+
             var order = await _orderRepository.Retrieve(command.OrderIdentifier);
 
             if (order.CustomerIdentifier != command.CustomerIdentifier)

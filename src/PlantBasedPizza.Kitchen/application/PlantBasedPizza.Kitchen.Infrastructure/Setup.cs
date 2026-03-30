@@ -60,7 +60,7 @@ namespace PlantBasedPizza.Kitchen.Infrastructure
 
             services.AddGrpcClient<Orders.Internal.Orders.OrdersClient>(o =>
                 {
-                    o.Address = new Uri(configuration["Services:OrdersInternal"]);
+                    o.Address = new Uri(configuration["Services:OrdersInternal"] ?? string.Empty);
                 })
                 .ConfigureChannel((provider, channel) =>
                 {

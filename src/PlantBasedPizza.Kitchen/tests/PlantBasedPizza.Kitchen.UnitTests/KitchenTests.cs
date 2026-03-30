@@ -11,7 +11,7 @@ namespace PlantBasedPizza.UnitTest
         [Fact]
         public void CanCreateNewKitchenRequest_ShouldCreate()
         {
-            var request = new KitchenRequestBuilder().AddRecipe("Pizza").Build();
+            var request = new KitchenRequestBuilder().AddRecipe("Pizza").Build()!;
 
             Assert.Single(request.Recipes);
             Assert.Equal(OrderIdentifier, request.OrderIdentifier);
@@ -28,7 +28,7 @@ namespace PlantBasedPizza.UnitTest
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                new KitchenRequest(null, new List<RecipeAdapter>(1)
+                new KitchenRequest(null!, new List<RecipeAdapter>(1)
                 {
                     new RecipeAdapter("Pizza")
                 });
@@ -38,7 +38,7 @@ namespace PlantBasedPizza.UnitTest
         [Fact]
         public void CanCreateAndMarkPreparing_ShouldSetPrepCompleted()
         {
-            var request = new KitchenRequestBuilder().AddRecipe("Pizza").Build();
+            var request = new KitchenRequestBuilder().AddRecipe("Pizza").Build()!;
 
             request.Preparing();
             request.PrepComplete();
@@ -50,7 +50,7 @@ namespace PlantBasedPizza.UnitTest
         [Fact]
         public void CanCreateAndMarkBaked_ShouldSetBakeComplete()
         {
-            var request = new KitchenRequestBuilder().AddRecipe("Pizza").Build();
+            var request = new KitchenRequestBuilder().AddRecipe("Pizza").Build()!;
 
             request.Preparing();
             request.PrepComplete();
@@ -63,7 +63,7 @@ namespace PlantBasedPizza.UnitTest
         [Fact]
         public async Task CanCreateAndMarkQualityChecked_ShouldSetQualityCheckedOn()
         {
-            var request = new KitchenRequestBuilder().AddRecipe("Pizza").Build();
+            var request = new KitchenRequestBuilder().AddRecipe("Pizza").Build()!;
 
             request.Preparing();
             request.PrepComplete();

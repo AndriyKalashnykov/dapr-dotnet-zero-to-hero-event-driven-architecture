@@ -103,7 +103,7 @@ public static class Setup
 
         services.AddGrpcClient<Loyalty.LoyaltyClient>(o =>
             {
-                o.Address = new Uri(configuration["Services:LoyaltyInternal"]);
+                o.Address = new Uri(configuration["Services:LoyaltyInternal"] ?? "http://localhost");
             })
             .ConfigureChannel((provider, channel) =>
             {

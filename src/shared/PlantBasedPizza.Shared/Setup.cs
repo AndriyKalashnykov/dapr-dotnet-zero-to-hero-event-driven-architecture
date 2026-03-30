@@ -32,7 +32,7 @@ namespace PlantBasedPizza.Shared
                     {
                         try
                         {
-                            if (httpContext.Request.Path.Value.Contains("/notifications"))
+                            if (httpContext.Request.Path.Value?.Contains("/notifications") == true)
                             {
                                 return false;
                             }

@@ -22,6 +22,7 @@ public class LoyaltyUnitTests
         var handleResponse = await handler.Handle(new AddLoyaltyPointsCommand()
         {
             CustomerIdentifier = customerId,
+            OrderIdentifier = "order-1",
             OrderValue = 50.79M
         });
 
@@ -47,6 +48,7 @@ public class LoyaltyUnitTests
         var handleResponse = await handler.Handle(new AddLoyaltyPointsCommand()
         {
             CustomerIdentifier = customerId,
+            OrderIdentifier = "order-2",
             OrderValue = 50.79M
         });
 
@@ -71,6 +73,7 @@ public class LoyaltyUnitTests
         var handleResponse = await handler.Handle(new SpendLoyaltyPointsCommand()
         {
             CustomerIdentifier = customerId,
+            OrderIdentifier = "order-3",
             PointsToSpend = 50
         });
 
@@ -95,6 +98,7 @@ public class LoyaltyUnitTests
         await Assert.ThrowsAsync<InsufficientPointsException>(async () => await handler.Handle(new SpendLoyaltyPointsCommand()
         {
             CustomerIdentifier = customerId,
+            OrderIdentifier = "order-4",
             PointsToSpend = 50
         }));
     }

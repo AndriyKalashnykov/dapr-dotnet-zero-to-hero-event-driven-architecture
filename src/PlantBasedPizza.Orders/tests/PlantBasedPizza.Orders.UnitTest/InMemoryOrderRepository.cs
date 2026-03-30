@@ -4,7 +4,7 @@ namespace PlantBasedPizza.Orders.UnitTest;
 
 public class InMemoryOrderRepository : IOrderRepository
 {
-    private Order order;
+    private Order order = default!;
     private readonly bool returnInvalidOrder = false;
 
     public InMemoryOrderRepository(bool returnInvalidOrder = false)
@@ -19,7 +19,7 @@ public class InMemoryOrderRepository : IOrderRepository
 
     public async Task<Order> Retrieve(string orderIdentifier)
     {
-        return returnInvalidOrder ? null : order;
+        return returnInvalidOrder ? null! : order;
     }
 
     public Task<List<Order>> GetAwaitingCollection()

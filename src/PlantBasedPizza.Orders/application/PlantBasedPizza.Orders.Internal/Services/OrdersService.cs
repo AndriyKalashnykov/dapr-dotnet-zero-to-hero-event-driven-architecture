@@ -24,7 +24,7 @@ public class OrdersService : Orders.OrdersBase
         if (cachedOrderData != null)
         {
             Activity.Current?.AddTag("cached", "true");
-            var cachedOrder = JsonSerializer.Deserialize<OrderDto>(cachedOrderData);
+            var cachedOrder = JsonSerializer.Deserialize<OrderDto>(cachedOrderData)!;
 
             var reply = new GetOrderDetailsReply()
             {

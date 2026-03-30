@@ -18,6 +18,6 @@ public class GetDeliveryQueryHandler
 
         var deliveryRequest = await _deliveryRequestRepository.GetDeliveryStatusForOrder(query.OrderIdentifier);
 
-        return new DeliveryRequestDto(deliveryRequest);
+        return new DeliveryRequestDto(deliveryRequest!);
     }
 }

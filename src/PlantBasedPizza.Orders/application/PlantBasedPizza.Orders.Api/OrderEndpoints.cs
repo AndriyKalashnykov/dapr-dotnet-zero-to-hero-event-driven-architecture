@@ -20,7 +20,7 @@ public static class OrderEndpoints
     {
         try
         {
-            var accountId = httpContext.User.Claims.ExtractAccountId();
+            var accountId = httpContext.User.Claims.ExtractAccountId() ?? string.Empty;
             var orders = await orderRepository.ForCustomer(accountId);
 
             return Results.Ok(orders.Select(order => new OrderDto(order)));
@@ -56,7 +56,7 @@ public static class OrderEndpoints
     {
         try
         {
-            request.CustomerIdentifier = httpContext.User.Claims.ExtractAccountId();
+            request.CustomerIdentifier = httpContext.User.Claims.ExtractAccountId() ?? string.Empty;
             var order = await handler.Handle(request);
 
             return Results.Created($"/order/{order?.OrderIdentifier}/detail", order);
@@ -73,7 +73,7 @@ public static class OrderEndpoints
     {
         try
         {
-            request.CustomerIdentifier = httpContext.User.Claims.ExtractAccountId();
+            request.CustomerIdentifier = httpContext.User.Claims.ExtractAccountId() ?? string.Empty;
             var order = await handler.Handle(request);
 
             return Results.Created($"/order/{order?.OrderIdentifier}/detail", order);
@@ -91,7 +91,7 @@ public static class OrderEndpoints
         try
         {
             request.AddToTelemetry();
-            request.CustomerIdentifier = httpContext.User.Claims.ExtractAccountId();
+            request.CustomerIdentifier = httpContext.User.Claims.ExtractAccountId() ?? string.Empty;
 
             var order = await handler.Handle(request);
 
@@ -114,7 +114,7 @@ public static class OrderEndpoints
     {
         try
         {
-            var accountId = httpContext.User.Claims.ExtractAccountId();
+            var accountId = httpContext.User.Claims.ExtractAccountId() ?? string.Empty;
 
             if (features.UseOrchestrator())
             {

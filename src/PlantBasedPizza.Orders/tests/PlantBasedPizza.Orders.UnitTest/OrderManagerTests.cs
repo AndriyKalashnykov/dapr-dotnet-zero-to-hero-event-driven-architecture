@@ -54,7 +54,7 @@ public class OrderManagerTests
         order.AddOrderItem("CHIPS", "Chips", 1, 3);
 
         Assert.Equal(2, order.Items.Count);
-        Assert.Equal(4, order.Items.FirstOrDefault(p => p.RecipeIdentifier == recipeId).Quantity);
+        Assert.Equal(4, order.Items.FirstOrDefault(p => p.RecipeIdentifier == recipeId)!.Quantity);
         Assert.Equal(43, order.TotalPrice);
     }
 
@@ -74,7 +74,7 @@ public class OrderManagerTests
         order.RemoveOrderItem("COCACOLA", 2);
 
         Assert.Equal(2, order.Items.Count);
-        Assert.Equal(2, order.Items.FirstOrDefault(p => p.RecipeIdentifier == recipeId).Quantity);
+        Assert.Equal(2, order.Items.FirstOrDefault(p => p.RecipeIdentifier == recipeId)!.Quantity);
         Assert.Equal(23, order.TotalPrice);
     }
 
@@ -93,7 +93,7 @@ public class OrderManagerTests
         Assert.NotEmpty(order.OrderNumber);
         Assert.True(Math.Abs((order.OrderDate - DateTime.Now).TotalSeconds) < 5);
         Assert.Equal(OrderType.Delivery, order.OrderType);
-        Assert.Equal("TEST", order.DeliveryDetails.AddressLine1);
+        Assert.Equal("TEST", order.DeliveryDetails!.AddressLine1);
     }
 
     [Fact]
@@ -123,7 +123,7 @@ public class OrderManagerTests
 
         order.SubmitOrder();
 
-        Assert.True(Math.Abs((order.OrderSubmittedOn.Value - DateTime.Now).TotalSeconds) < 5);
+        Assert.True(Math.Abs((order.OrderSubmittedOn!.Value - DateTime.Now).TotalSeconds) < 5);
     }
 
     [Fact]
@@ -141,7 +141,7 @@ public class OrderManagerTests
 
         order.AddOrderItem("PIZZA", "Pizza 1", 1, 10);
 
-        Assert.Equal(1, order.Items.FirstOrDefault().Quantity);
+        Assert.Equal(1, order.Items.FirstOrDefault()!.Quantity);
     }
 
     [Fact]
@@ -157,7 +157,7 @@ public class OrderManagerTests
 
         order.CompleteOrder();
 
-        Assert.True(Math.Abs((order.OrderCompletedOn.Value - DateTime.Now).TotalSeconds) < 5);
+        Assert.True(Math.Abs((order.OrderCompletedOn!.Value - DateTime.Now).TotalSeconds) < 5);
         Assert.False(order.AwaitingCollection);
     }
 

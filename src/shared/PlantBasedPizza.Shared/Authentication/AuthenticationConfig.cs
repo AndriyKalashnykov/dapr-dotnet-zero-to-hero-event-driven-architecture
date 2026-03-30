@@ -22,7 +22,7 @@ public static class AuthenticationConfig
                 ValidIssuer = configuration["Auth:Issuer"],
                 ValidAudience = configuration["Auth:Audience"],
                 IssuerSigningKey = new SymmetricSecurityKey
-                    (Encoding.UTF8.GetBytes(configuration["Auth:Key"])),
+                    (Encoding.UTF8.GetBytes(configuration["Auth:Key"] ?? string.Empty)),
                 ValidateIssuer = true,
                 ValidateAudience = true,
                 ValidateLifetime = false,

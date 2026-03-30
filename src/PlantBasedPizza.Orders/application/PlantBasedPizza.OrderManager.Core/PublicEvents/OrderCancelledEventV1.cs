@@ -13,7 +13,7 @@ public class OrderCancelledEventV1 : IntegrationEvent
     [JsonIgnore]
     public override Uri Source => new Uri("https://orders.plantbasedpizza");
 
-    public string OrderIdentifier { get; init; }
+    public required string OrderIdentifier { get; init; }
 
     public override string AsString()
     {

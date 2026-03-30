@@ -2,11 +2,11 @@ namespace PlantBasedPizza.Kitchen.Infrastructure;
 
 public record DeadLetterMessage
 {
-    public string EventId { get; set; }
+    public required string EventId { get; set; }
 
-    public string EventType { get; set; }
+    public required string EventType { get; set; }
 
-    public string EventData { get; set; }
+    public required string EventData { get; set; }
 
-    public string TraceParent { get; set; }
+    public required string TraceParent { get; set; }
 }

@@ -41,12 +41,12 @@ public class OutboxWorker : BackgroundService
                     switch (outboxItem.EventType)
                     {
                         case nameof(DriverCollectedOrderEventV1):
-                            var orderCompletedIntegrationEvt = JsonSerializer.Deserialize<DriverCollectedOrderEventV1>(outboxItem.EventData);
+                            var orderCompletedIntegrationEvt = JsonSerializer.Deserialize<DriverCollectedOrderEventV1>(outboxItem.EventData)!;
                             await _eventPublisher.PublishDriverOrderCollectedEventV1(orderCompletedIntegrationEvt);
                             outboxItem.Processed = true;
                             break;
                         case nameof(DriverDeliveredOrderEventV1):
-                            var orderReadyForDeliveryEvt = JsonSerializer.Deserialize<DriverDeliveredOrderEventV1>(outboxItem.EventData);
+                            var orderReadyForDeliveryEvt = JsonSerializer.Deserialize<DriverDeliveredOrderEventV1>(outboxItem.EventData)!;
                             await _eventPublisher.PublishDriverDeliveredOrderEventV1(orderReadyForDeliveryEvt);
                             outboxItem.Processed = true;
                             break;

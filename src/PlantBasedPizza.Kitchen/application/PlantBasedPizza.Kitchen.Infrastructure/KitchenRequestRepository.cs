@@ -18,7 +18,7 @@ public class KitchenRequestRepository : IKitchenRequestRepository
         _outboxItems = database.GetCollection<OutboxItem>("kitchen_outboxitems");
     }
 
-    public async Task AddNew(KitchenRequest kitchenRequest, List<IntegrationEvent> events = null)
+    public async Task AddNew(KitchenRequest kitchenRequest, List<IntegrationEvent>? events = null)
     {
         await _kitchenRequests.InsertOneAsync(kitchenRequest).ConfigureAwait(false);
 
@@ -33,7 +33,7 @@ public class KitchenRequestRepository : IKitchenRequestRepository
         }
     }
 
-    public async Task Update(KitchenRequest kitchenRequest, List<IntegrationEvent> events = null)
+    public async Task Update(KitchenRequest kitchenRequest, List<IntegrationEvent>? events = null)
     {
         var queryBuilder = Builders<KitchenRequest>.Filter.Eq(req => req.OrderIdentifier, kitchenRequest.OrderIdentifier);
 

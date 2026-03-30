@@ -236,7 +236,6 @@ public class AccountTests
     {
         var testEmailAddress = "test@test.com";
         var testPassword = "this does not meet password requirements";
-        var testAccountId = "1234";
 
         var userRepo = A.Fake<IUserAccountRepository>();
         var jwtOptions = Options.Create(new JwtConfiguration()

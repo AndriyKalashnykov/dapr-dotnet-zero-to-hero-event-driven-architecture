@@ -8,7 +8,7 @@ public class CustomerLoyaltyPointsUpdated : IntegrationEvent
     public override string EventVersion => "v1";
     public override Uri Source => new("https://loyalty.plantbasedpizza");
 
-    public string CustomerIdentifier { get; set; }
+    public required string CustomerIdentifier { get; set; }
 
     public decimal TotalLoyaltyPoints { get; set; }
 }
