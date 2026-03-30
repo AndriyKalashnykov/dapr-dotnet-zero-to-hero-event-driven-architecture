@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using PlantBasedPizza.Deliver.Core.Entities;
@@ -16,10 +15,10 @@ namespace PlantBasedPizza.Delivery.UnitTests
         {
             var request = new DeliveryRequest(OrderIdentifier, new Address("Address line 1", "TY6 7UI"));
 
-            request.OrderIdentifier.Should().Be(OrderIdentifier);
-            request.DeliveryAddress.Should().NotBeNull();
-            request.DeliveryAddress.AddressLine1.Should().Be("Address line 1");
-            request.DeliveryAddress.Postcode.Should().Be("TY6 7UI");
+            Assert.Equal(OrderIdentifier, request.OrderIdentifier);
+            Assert.NotNull(request.DeliveryAddress);
+            Assert.Equal("Address line 1", request.DeliveryAddress.AddressLine1);
+            Assert.Equal("TY6 7UI", request.DeliveryAddress.Postcode);
         }
 
         [Fact]
@@ -29,8 +28,9 @@ namespace PlantBasedPizza.Delivery.UnitTests
 
             _ = request.ClaimDelivery("James");
 
-            request.Driver.Should().Be("James");
-            request.DriverCollectedOn.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
+            Assert.Equal("James", request.Driver);
+            Assert.NotNull(request.DriverCollectedOn);
+            Assert.True(Math.Abs((request.DriverCollectedOn.Value - DateTime.Now).TotalSeconds) < 5);
         }
 
         [Fact]

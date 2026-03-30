@@ -33,7 +33,7 @@ public class AccountTests
         var result = await userAccountService.Register(
             new RegisterUserCommand() { EmailAddress = testEmailAddress, Password = testPassword }, AccountType.User);
 
-        result.AccountId.Should().NotBeEmpty();
+        Assert.NotEmpty(result.AccountId);
     }
 
     [Fact]
@@ -65,7 +65,7 @@ public class AccountTests
         var result = await userAccountService.Register(
             new RegisterUserCommand() { EmailAddress = testEmailAddress, Password = testPassword }, AccountType.Driver);
 
-        result.AccountId.Should().NotBeEmpty();
+        Assert.NotEmpty(result.AccountId);
     }
 
     [Fact]
@@ -97,7 +97,7 @@ public class AccountTests
         var result = await userAccountService.Register(
             new RegisterUserCommand() { EmailAddress = testEmailAddress, Password = testPassword }, AccountType.Staff);
 
-        result.AccountId.Should().NotBeEmpty();
+        Assert.NotEmpty(result.AccountId);
     }
 
     [Fact]
@@ -129,7 +129,7 @@ public class AccountTests
         var exception = await Assert.ThrowsAsync<InvalidUserException>(async () => await userAccountService.Register(
             new RegisterUserCommand() { EmailAddress = testEmailAddress, Password = testPassword }, AccountType.Staff));
 
-        exception.Reason.Should().Be("Not a valid staff email");
+        Assert.Equal("Not a valid staff email", exception.Reason);
     }
 
     [Fact]
@@ -161,7 +161,7 @@ public class AccountTests
         var exception = await Assert.ThrowsAsync<InvalidUserException>(async () => await userAccountService.Register(
             new RegisterUserCommand() { EmailAddress = testEmailAddress, Password = testPassword }, AccountType.User));
 
-        exception.Reason.Should().Be("Invalid email address");
+        Assert.Equal("Invalid email address", exception.Reason);
     }
 
     [Fact]
@@ -193,7 +193,7 @@ public class AccountTests
         var exception = await Assert.ThrowsAsync<InvalidUserException>(async () => await userAccountService.Register(
             new RegisterUserCommand() { EmailAddress = testEmailAddress, Password = testPassword }, AccountType.User));
 
-        exception.Reason.Should().Be("Invalid password");
+        Assert.Equal("Invalid password", exception.Reason);
     }
 
     [Fact]
@@ -228,7 +228,7 @@ public class AccountTests
             Password = testPassword
         });
 
-        loginResult.AuthToken.Should().NotBeEmpty();
+        Assert.NotEmpty(loginResult.AuthToken);
     }
 
     [Fact]

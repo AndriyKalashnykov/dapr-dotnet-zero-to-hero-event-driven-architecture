@@ -1,5 +1,4 @@
 using FakeItEasy;
-using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using PlantBasedPizza.LoyaltyPoints.Shared.Core;
 
@@ -26,7 +25,7 @@ public class LoyaltyUnitTests
             OrderValue = 50.79M
         });
 
-        handleResponse.TotalPoints.Should().Be(51);
+        Assert.Equal(51, handleResponse.TotalPoints);
     }
 
     [Fact]
@@ -51,7 +50,7 @@ public class LoyaltyUnitTests
             OrderValue = 50.79M
         });
 
-        handleResponse.TotalPoints.Should().Be(201);
+        Assert.Equal(201, handleResponse.TotalPoints);
     }
 
     [Fact]
@@ -75,7 +74,7 @@ public class LoyaltyUnitTests
             PointsToSpend = 50
         });
 
-        handleResponse.TotalPoints.Should().Be(100);
+        Assert.Equal(100, handleResponse.TotalPoints);
     }
 
     [Fact]
@@ -93,12 +92,10 @@ public class LoyaltyUnitTests
 
         var handler = new SpendLoyaltyPointsCommandHandler(mockRepo);
 
-        var act = async () => await handler.Handle(new SpendLoyaltyPointsCommand()
+        await Assert.ThrowsAsync<InsufficientPointsException>(async () => await handler.Handle(new SpendLoyaltyPointsCommand()
         {
             CustomerIdentifier = customerId,
             PointsToSpend = 50
-        });
-
-        await act.Should().ThrowAsync<InsufficientPointsException>();
+        }));
     }
 }

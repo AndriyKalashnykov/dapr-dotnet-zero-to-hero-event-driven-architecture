@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Moq;
 using PlantBasedPizza.Deliver.Core.AssignDriver;
 using PlantBasedPizza.Deliver.Core.Entities;
@@ -24,8 +23,8 @@ public class AssignDeliveryRequestTests
             DriverName = "james"
         });
 
-        result.Should().NotBeNull();
-        result.Driver.Should().Be("james");
+        Assert.NotNull(result);
+        Assert.Equal("james", result.Driver);
     }
 
     [Fact]
@@ -43,6 +42,6 @@ public class AssignDeliveryRequestTests
             DriverName = "james"
         });
 
-        result.Should().BeNull();
+        Assert.Null(result);
     }
 }

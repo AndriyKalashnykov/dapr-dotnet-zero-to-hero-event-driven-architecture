@@ -1,4 +1,3 @@
-using FluentAssertions;
 using PlantBasedPizza.OrderManager.Core.Entities;
 
 namespace PlantBasedPizza.Orders.UnitTest;
@@ -12,12 +11,14 @@ public class OrderManagerTests
     {
         var order = Order.Create(OrderType.Pickup, DefaultCustomerIdentifier);
 
-        order.Items.Should().NotBeNull();
-        order.Items.Should().BeEmpty();
-        order.OrderNumber.Should().NotBeNullOrEmpty();
-        order.OrderIdentifier.Should().NotBeNullOrEmpty();
-        order.OrderDate.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
-        order.OrderType.Should().Be(OrderType.Pickup);
+        Assert.NotNull(order.Items);
+        Assert.Empty(order.Items);
+        Assert.NotNull(order.OrderNumber);
+        Assert.NotEmpty(order.OrderNumber);
+        Assert.NotNull(order.OrderIdentifier);
+        Assert.NotEmpty(order.OrderIdentifier);
+        Assert.True(Math.Abs((order.OrderDate - DateTime.Now).TotalSeconds) < 5);
+        Assert.Equal(OrderType.Pickup, order.OrderType);
     }
 
     [Fact]
@@ -27,7 +28,7 @@ public class OrderManagerTests
 
         order.AddHistory("Bake complete");
 
-        order.History().Count.Should().Be(2);
+        Assert.Equal(2, order.History().Count);
     }
 
     [Fact]
@@ -37,8 +38,8 @@ public class OrderManagerTests
 
         order.IsAwaitingCollection();
 
-        order.History().Count.Should().Be(2);
-        order.AwaitingCollection.Should().BeTrue();
+        Assert.Equal(2, order.History().Count);
+        Assert.True(order.AwaitingCollection);
     }
 
     [Fact]
@@ -52,9 +53,9 @@ public class OrderManagerTests
         order.AddOrderItem(recipeId, "Pizza 1", 3, 10);
         order.AddOrderItem("CHIPS", "Chips", 1, 3);
 
-        order.Items.Count.Should().Be(2);
-        order.Items.FirstOrDefault(p => p.RecipeIdentifier == recipeId).Quantity.Should().Be(4);
-        order.TotalPrice.Should().Be(43);
+        Assert.Equal(2, order.Items.Count);
+        Assert.Equal(4, order.Items.FirstOrDefault(p => p.RecipeIdentifier == recipeId).Quantity);
+        Assert.Equal(43, order.TotalPrice);
     }
 
     [Fact]
@@ -72,9 +73,9 @@ public class OrderManagerTests
         order.RemoveOrderItem(recipeId, 2);
         order.RemoveOrderItem("COCACOLA", 2);
 
-        order.Items.Count.Should().Be(2);
-        order.Items.FirstOrDefault(p => p.RecipeIdentifier == recipeId).Quantity.Should().Be(2);
-        order.TotalPrice.Should().Be(23);
+        Assert.Equal(2, order.Items.Count);
+        Assert.Equal(2, order.Items.FirstOrDefault(p => p.RecipeIdentifier == recipeId).Quantity);
+        Assert.Equal(23, order.TotalPrice);
     }
 
     [Fact]
@@ -86,12 +87,13 @@ public class OrderManagerTests
             Postcode = "XN6 7UY"
         });
 
-        order.Items.Should().NotBeNull();
-        order.Items.Should().BeEmpty();
-        order.OrderNumber.Should().NotBeNullOrEmpty();
-        order.OrderDate.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
-        order.OrderType.Should().Be(OrderType.Delivery);
-        order.DeliveryDetails.AddressLine1.Should().Be("TEST");
+        Assert.NotNull(order.Items);
+        Assert.Empty(order.Items);
+        Assert.NotNull(order.OrderNumber);
+        Assert.NotEmpty(order.OrderNumber);
+        Assert.True(Math.Abs((order.OrderDate - DateTime.Now).TotalSeconds) < 5);
+        Assert.Equal(OrderType.Delivery, order.OrderType);
+        Assert.Equal("TEST", order.DeliveryDetails.AddressLine1);
     }
 
     [Fact]
@@ -105,7 +107,7 @@ public class OrderManagerTests
 
         order.AddOrderItem("PIZZA", "Pizza 1", 1, 10);
 
-        order.TotalPrice.Should().Be(13.50M);
+        Assert.Equal(13.50M, order.TotalPrice);
     }
 
     [Fact]
@@ -121,7 +123,7 @@ public class OrderManagerTests
 
         order.SubmitOrder();
 
-        order.OrderSubmittedOn.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
+        Assert.True(Math.Abs((order.OrderSubmittedOn.Value - DateTime.Now).TotalSeconds) < 5);
     }
 
     [Fact]
@@ -139,7 +141,7 @@ public class OrderManagerTests
 
         order.AddOrderItem("PIZZA", "Pizza 1", 1, 10);
 
-        order.Items.FirstOrDefault().Quantity.Should().Be(1);
+        Assert.Equal(1, order.Items.FirstOrDefault().Quantity);
     }
 
     [Fact]
@@ -155,8 +157,8 @@ public class OrderManagerTests
 
         order.CompleteOrder();
 
-        order.OrderCompletedOn.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
-        order.AwaitingCollection.Should().BeFalse();
+        Assert.True(Math.Abs((order.OrderCompletedOn.Value - DateTime.Now).TotalSeconds) < 5);
+        Assert.False(order.AwaitingCollection);
     }
 
 

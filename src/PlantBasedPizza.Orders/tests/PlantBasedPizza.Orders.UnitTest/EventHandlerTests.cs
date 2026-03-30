@@ -1,5 +1,4 @@
 using System.Text.Json;
-using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -55,8 +54,7 @@ public class EventHandlerTests
 
         var order = await inMemoryOrderRepository.Retrieve(paymentSuccessEvent.OrderIdentifier);
 
-        order.Events.FirstOrDefault(evt => evt.EventName == "order.orderConfirmed" && evt.EventVersion == "v1").Should()
-            .NotBeNull();
+        Assert.NotNull(order.Events.FirstOrDefault(evt => evt.EventName == "order.orderConfirmed" && evt.EventVersion == "v1"));
     }
 
     [Fact]
@@ -84,6 +82,6 @@ public class EventHandlerTests
             paymentSuccessEvent
         );
 
-        handlerResult.Should().BeOfType<InternalServerError>();
+        Assert.IsType<InternalServerError>(handlerResult);
     }
 }

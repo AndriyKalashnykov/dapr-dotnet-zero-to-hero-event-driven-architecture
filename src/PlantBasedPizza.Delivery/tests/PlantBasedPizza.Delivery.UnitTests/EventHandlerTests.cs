@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -31,9 +30,9 @@ public class EventHandlerTests
                 OrderIdentifier = "ORD123"
             });
 
-        eventHandlerResult.Should().Be(Results.Ok());
+        Assert.Equal(Results.Ok(), eventHandlerResult);
         repository.Verify(repo => repo.AddNewDeliveryRequest(It.IsAny<DeliveryRequest>(), It.IsAny<List<IntegrationEvent>>()), Times.Once);
-        idempotency.HandledEvents.Should().HaveCount(1);
+        Assert.Single(idempotency.HandledEvents);
     }
 
     [Fact]
@@ -56,9 +55,9 @@ public class EventHandlerTests
                 OrderIdentifier = "ORD123"
             });
 
-        eventHandlerResult.Should().Be(Results.Ok());
+        Assert.Equal(Results.Ok(), eventHandlerResult);
         repository.Verify(repo => repo.AddNewDeliveryRequest(It.IsAny<DeliveryRequest>(), It.IsAny<List<IntegrationEvent>>()), Times.Never);
-        idempotency.HandledEvents.Should().HaveCount(1);
+        Assert.Single(idempotency.HandledEvents);
     }
 
     [Fact]
@@ -91,10 +90,10 @@ public class EventHandlerTests
                 OrderIdentifier = "ORD123"
             });
 
-        firstHandlerResult.Should().Be(Results.Ok());
-        secondHandlerResult.Should().Be(Results.Ok());
+        Assert.Equal(Results.Ok(), firstHandlerResult);
+        Assert.Equal(Results.Ok(), secondHandlerResult);
         repository.Verify(repo => repo.AddNewDeliveryRequest(It.IsAny<DeliveryRequest>(), It.IsAny<List<IntegrationEvent>>()), Times.Once);
-        idempotency.HandledEvents.Should().HaveCount(1);
+        Assert.Single(idempotency.HandledEvents);
     }
 
     private static HttpContext generateDefaultHttpContext(string eventId)

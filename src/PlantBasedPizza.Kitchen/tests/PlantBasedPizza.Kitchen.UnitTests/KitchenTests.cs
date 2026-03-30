@@ -1,4 +1,3 @@
-using FluentAssertions;
 using PlantBasedPizza.Kitchen.Core.Adapters;
 using PlantBasedPizza.Kitchen.Core.Entities;
 using PlantBasedPizza.UnitTest.Builders;
@@ -14,14 +13,14 @@ namespace PlantBasedPizza.UnitTest
         {
             var request = new KitchenRequestBuilder().AddRecipe("Pizza").Build();
 
-            request.Recipes.Count.Should().Be(1);
-            request.OrderIdentifier.Should().Be(OrderIdentifier);
-            request.OrderState.Should().Be(OrderState.NEW);
-            request.BakeCompleteOn.Should().BeNull();
-            request.OrderReceivedOn.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
-            request.PrepCompleteOn.Should().BeNull();
-            request.QualityCheckCompleteOn.Should().BeNull();
-            request.KitchenRequestId.Should().NotBeNull();
+            Assert.Single(request.Recipes);
+            Assert.Equal(OrderIdentifier, request.OrderIdentifier);
+            Assert.Equal(OrderState.NEW, request.OrderState);
+            Assert.Null(request.BakeCompleteOn);
+            Assert.True(Math.Abs((request.OrderReceivedOn - DateTime.Now).TotalSeconds) < 5);
+            Assert.Null(request.PrepCompleteOn);
+            Assert.Null(request.QualityCheckCompleteOn);
+            Assert.NotNull(request.KitchenRequestId);
         }
 
         [Fact]
@@ -44,7 +43,8 @@ namespace PlantBasedPizza.UnitTest
             request.Preparing();
             request.PrepComplete();
 
-            request.PrepCompleteOn.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
+            Assert.NotNull(request.PrepCompleteOn);
+            Assert.True(Math.Abs((request.PrepCompleteOn.Value - DateTime.Now).TotalSeconds) < 5);
         }
 
         [Fact]
@@ -56,7 +56,8 @@ namespace PlantBasedPizza.UnitTest
             request.PrepComplete();
             request.BakeComplete();
 
-            request.BakeCompleteOn.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
+            Assert.NotNull(request.BakeCompleteOn);
+            Assert.True(Math.Abs((request.BakeCompleteOn.Value - DateTime.Now).TotalSeconds) < 5);
         }
 
         [Fact]
@@ -69,7 +70,8 @@ namespace PlantBasedPizza.UnitTest
             request.BakeComplete();
             await request.QualityCheckComplete();
 
-            request.QualityCheckCompleteOn.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
+            Assert.NotNull(request.QualityCheckCompleteOn);
+            Assert.True(Math.Abs((request.QualityCheckCompleteOn.Value - DateTime.Now).TotalSeconds) < 5);
         }
     }
 }
