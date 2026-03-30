@@ -6,7 +6,7 @@ namespace PlantBasedPizza.OrderManager.Core.ConfirmOrder
     {
         [JsonPropertyName("OrderIdentifier")]
         public string OrderIdentifier { get; init; } = "";
-        
+
         [JsonPropertyName("paymentAmount")]
         public decimal PaymentAmount { get; init; }
     }

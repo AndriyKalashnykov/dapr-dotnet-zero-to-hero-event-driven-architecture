@@ -50,7 +50,7 @@ public class LoyaltyService : Loyalty.LoyaltyBase
         };
 
         var result = await _handler.Handle(command);
-        
+
         return new AddLoyaltyPointsReply()
         {
             CustomerIdentifier = request.CustomerIdentifier,

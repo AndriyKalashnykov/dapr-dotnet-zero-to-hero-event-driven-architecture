@@ -22,7 +22,7 @@ public class OutboxWorker : BackgroundService
         var database = client.GetDatabase("PlantBasedPizza");
         _outboxItems = database.GetCollection<OutboxItem>("orders_outboxitems");
     }
-    
+
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         while (!stoppingToken.IsCancellationRequested)
@@ -35,7 +35,7 @@ public class OutboxWorker : BackgroundService
                 {
                     using var processingActivity = StartFromOutboxItem(outboxItem);
                     processingActivity?.Start();
-                    
+
                     _logger.LogInformation("Processing outbox item: Type: {OutboxItemType}. Data: {OutboxItemData}",
                         outboxItem.EventType, outboxItem.EventData);
 
@@ -114,7 +114,7 @@ public class OutboxWorker : BackgroundService
             {
                 var context = ActivityContext.Parse(outboxItem.TraceId, null);
                 var messageProcessingActivity = _source.StartActivity("process", ActivityKind.Internal, context);
-                
+
                 return messageProcessingActivity;
             }
             catch (Exception ex)

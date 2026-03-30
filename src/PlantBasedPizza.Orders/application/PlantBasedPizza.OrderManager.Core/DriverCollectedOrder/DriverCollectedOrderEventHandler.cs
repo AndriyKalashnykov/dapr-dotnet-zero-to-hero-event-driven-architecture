@@ -14,7 +14,7 @@ namespace PlantBasedPizza.OrderManager.Core.DriverCollectedOrder
             _orderRepository = orderRepository;
             _userNotificationService = userNotificationService;
         }
-        
+
         [Channel("delivery.driverCollectedOrder.v1")]
         [PublishOperation(typeof(DriverCollectedOrderEventV1), OperationId = nameof(DriverCollectedOrderEventV1))]
         public async Task Handle(DriverCollectedOrderEventV1 evt)
@@ -22,7 +22,7 @@ namespace PlantBasedPizza.OrderManager.Core.DriverCollectedOrder
             var order = await _orderRepository.Retrieve(evt.OrderIdentifier);
 
             order.AddHistory($"Order collected by driver {evt.DriverName}");
-            
+
             await _orderRepository.Update(order).ConfigureAwait(false);
             await _userNotificationService.NotifyOrderDriverAssigned(order.CustomerIdentifier, order.OrderIdentifier);
         }

@@ -28,7 +28,7 @@ namespace PlantBasedPizza.Kitchen.Core.OrderConfirmed
             }
 
             var recipes = new List<RecipeAdapter>();
-            
+
             var orderDetails = await orderService.GetOrderDetails(evt.OrderIdentifier);
 
             foreach (var recipe in orderDetails.Items)

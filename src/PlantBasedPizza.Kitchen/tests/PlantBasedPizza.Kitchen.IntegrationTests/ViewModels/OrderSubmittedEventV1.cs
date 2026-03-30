@@ -7,9 +7,9 @@ public class OrderSubmittedEventV1 : IntegrationEvent
     public override string EventName => "order.orderSubmitted";
     public override string EventVersion => "v1";
     public override Uri Source => new Uri("https://kitchen.test.plantbasedpizza");
-    
+
     public string OrderIdentifier { get; init; }
-    
+
     public List<OrderSubmittedEventItem> Items { get; init; }
 }
 

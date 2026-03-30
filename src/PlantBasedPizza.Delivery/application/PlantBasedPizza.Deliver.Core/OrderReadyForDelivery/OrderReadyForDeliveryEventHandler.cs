@@ -15,7 +15,7 @@ namespace PlantBasedPizza.Deliver.Core.OrderReadyForDelivery
             _deliveryRequestRepository = deliveryRequestRepository;
             _logger = logger;
         }
-        
+
         [Channel("order.readyForDelivery.v1")]
         [PublishOperation(typeof(OrderReadyForDeliveryEventV1), OperationId = nameof(OrderReadyForDeliveryEventV1))]
         public async Task Handle(OrderReadyForDeliveryEventV1 evt)
@@ -24,7 +24,7 @@ namespace PlantBasedPizza.Deliver.Core.OrderReadyForDelivery
             {
                 throw new ArgumentNullException(nameof(evt), "Handled event cannot be null");
             }
-            
+
             _logger.LogInformation("Received new ready for delivery event for order {OrderIdentifier}", evt.OrderIdentifier);
 
             var existingDeliveryRequestForOrder =
@@ -35,7 +35,7 @@ namespace PlantBasedPizza.Deliver.Core.OrderReadyForDelivery
                 _logger.LogInformation("Delivery request for order received, skipping");
                 return;
             }
-            
+
             var request = new DeliveryRequest(evt.OrderIdentifier,
                 new Address(evt.DeliveryAddressLine1, evt.DeliveryAddressLine2, evt.DeliveryAddressLine3,
                     evt.DeliveryAddressLine4, evt.DeliveryAddressLine5, evt.Postcode));

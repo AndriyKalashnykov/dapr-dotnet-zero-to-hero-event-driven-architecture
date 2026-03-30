@@ -35,7 +35,7 @@ public class SchemaTests
         var validationResults = expectedSchema.Validate(eventJson);
         validationResults.Count.Should().Be(0, "Should match expected schema");
     }
-    
+
     [Fact]
     public async Task WhenOrderSubmitted_V1SchemaShouldMatchDefinition()
     {
@@ -51,7 +51,7 @@ public class SchemaTests
         var validationResults = expectedSchema.Validate(eventJson);
         validationResults.Count.Should().Be(0, "Should match expected schema");
     }
-    
+
     [Fact]
     public async Task WhenOrderCancelled_V1SchemaShouldMatchDefinition()
     {
@@ -67,7 +67,7 @@ public class SchemaTests
         var validationResults = expectedSchema.Validate(eventJson);
         validationResults.Count.Should().Be(0, "Should match expected schema");
     }
-    
+
     [Fact]
     public async Task WhenOrderCompleted_V1SchemaShouldMatchDefinition()
     {
@@ -84,7 +84,7 @@ public class SchemaTests
         var validationResults = expectedSchema.Validate(eventJson);
         validationResults.Count.Should().Be(0, "Should match expected schema");
     }
-    
+
     [Fact]
     public async Task WhenOrderCompleted_V2SchemaShouldMatchDefinition()
     {
@@ -101,7 +101,7 @@ public class SchemaTests
         var validationResults = expectedSchema.Validate(eventJson);
         validationResults.Count.Should().Be(0, "Should match expected schema");
     }
-    
+
     [Fact]
     public async Task WhenOrderConfirmed_V1SchemaShouldMatchDefinition()
     {
@@ -118,7 +118,7 @@ public class SchemaTests
         var validationResults = expectedSchema.Validate(eventJson);
         validationResults.Count.Should().Be(0, "Should match expected schema");
     }
-    
+
     [Fact]
     public async Task WhenOrderReadyForDelivery_V1SchemaShouldMatchDefinition()
     {

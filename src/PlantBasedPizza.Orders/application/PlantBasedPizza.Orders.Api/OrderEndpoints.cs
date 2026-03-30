@@ -109,13 +109,13 @@ public static class OrderEndpoints
     public static async Task<IResult> SubmitOrder(HttpContext httpContext, string orderIdentifier,
         [FromServices] SubmitOrderCommandHandler handler,
         [FromServices] IFeatures features,
-        [FromServices] IWorkflowEngine workflowEngine, 
+        [FromServices] IWorkflowEngine workflowEngine,
         [FromServices] IPaymentService paymentService)
     {
         try
         {
             var accountId = httpContext.User.Claims.ExtractAccountId();
-            
+
             if (features.UseOrchestrator())
             {
                 await workflowEngine.StartOrderWorkflowFor(orderIdentifier);
@@ -195,7 +195,7 @@ public static class OrderEndpoints
                 await workflowEngine.OrderCollected(request.OrderIdentifier);
                 return Results.Ok();
             }
-            
+
             var result = await handler.Handle(request);
             return result != null ? Results.Ok(result) : Results.NotFound();
         }

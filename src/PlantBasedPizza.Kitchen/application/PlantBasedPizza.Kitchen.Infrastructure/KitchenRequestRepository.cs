@@ -21,7 +21,7 @@ public class KitchenRequestRepository : IKitchenRequestRepository
     public async Task AddNew(KitchenRequest kitchenRequest, List<IntegrationEvent> events = null)
     {
         await _kitchenRequests.InsertOneAsync(kitchenRequest).ConfigureAwait(false);
-            
+
         foreach (var evt in (events ?? new()))
         {
             await _outboxItems.InsertOneAsync(new OutboxItem()
@@ -38,7 +38,7 @@ public class KitchenRequestRepository : IKitchenRequestRepository
         var queryBuilder = Builders<KitchenRequest>.Filter.Eq(req => req.OrderIdentifier, kitchenRequest.OrderIdentifier);
 
         var updateResult = await _kitchenRequests.ReplaceOneAsync(queryBuilder, kitchenRequest);
-            
+
         foreach (var evt in (events ?? new()))
         {
             await _outboxItems.InsertOneAsync(new OutboxItem()
@@ -48,7 +48,7 @@ public class KitchenRequestRepository : IKitchenRequestRepository
                 Processed = false
             });
         }
-        
+
         updateResult.AddToTelemetry();
     }
 

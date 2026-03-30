@@ -21,7 +21,7 @@ public static class Endpoints
             return new List<KitchenRequestDto>();
         }
     }
-    
+
     public static async Task<IEnumerable<KitchenRequestDto>> GetPrep([FromServices] IKitchenRequestRepository kitchenRequestRepository)
     {
         try
@@ -36,7 +36,7 @@ public static class Endpoints
             return new List<KitchenRequestDto>();
         }
     }
-    
+
     public static async Task<IEnumerable<KitchenRequestDto>> GetBaking([FromServices] IKitchenRequestRepository kitchenRequestRepository)
     {
         try
@@ -51,7 +51,7 @@ public static class Endpoints
             return new List<KitchenRequestDto>();
         }
     }
-    
+
     public static async Task<IEnumerable<KitchenRequestDto>> GetAwaitingQualityCheck([FromServices] IKitchenRequestRepository kitchenRequestRepository)
     {
         try
@@ -66,11 +66,11 @@ public static class Endpoints
             return new List<KitchenRequestDto>();
         }
     }
-    
+
     public static async Task<KitchenRequestDto> MarkPreparing([FromServices] IKitchenRequestRepository kitchenRequestRepository, string orderIdentifier)
     {
         Activity.Current?.AddTag("orderIdentifier", orderIdentifier);
-        
+
         var kitchenRequest = await kitchenRequestRepository.Retrieve(orderIdentifier);
 
         kitchenRequest.Preparing();
@@ -82,11 +82,11 @@ public static class Endpoints
 
         return new KitchenRequestDto(kitchenRequest);
     }
-    
+
     public static async Task<KitchenRequestDto> MarkPrepComplete([FromServices] IKitchenRequestRepository kitchenRequestRepository, string orderIdentifier)
     {
         Activity.Current?.AddTag("orderIdentifier", orderIdentifier);
-        
+
         var kitchenRequest = kitchenRequestRepository.Retrieve(orderIdentifier).Result;
 
         kitchenRequest.PrepComplete();
@@ -98,11 +98,11 @@ public static class Endpoints
 
         return new KitchenRequestDto(kitchenRequest);
     }
-    
+
     public static async Task<KitchenRequestDto> MarkBakeComplete([FromServices] IKitchenRequestRepository kitchenRequestRepository, string orderIdentifier)
     {
         Activity.Current?.AddTag("orderIdentifier", orderIdentifier);
-        
+
         var kitchenRequest = kitchenRequestRepository.Retrieve(orderIdentifier).Result;
 
         kitchenRequest.BakeComplete();
@@ -114,11 +114,11 @@ public static class Endpoints
 
         return new KitchenRequestDto(kitchenRequest);
     }
-    
+
     public static async Task<KitchenRequestDto> MarkQualityChecked([FromServices] IKitchenRequestRepository kitchenRequestRepository, string orderIdentifier)
     {
         Activity.Current?.AddTag("orderIdentifier", orderIdentifier);
-        
+
         var kitchenRequest = kitchenRequestRepository.Retrieve(orderIdentifier).Result;
 
         await kitchenRequest.QualityCheckComplete();

@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using FastEndpoints;
+using MongoDB.Driver;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using PlantBasedPizza.Account.Api.Configurations;
@@ -36,7 +37,7 @@ builder.Services
     .AddServiceConfigs(appLogger, builder)
     .AddSharedInfrastructure(builder.Configuration, serviceName)
     .AddHealthChecks()
-    .AddMongoDb(builder.Configuration["DatabaseConnection"]);
+    .AddMongoDb(sp => sp.GetRequiredService<MongoClient>());
 
 var app = builder.Build();
 

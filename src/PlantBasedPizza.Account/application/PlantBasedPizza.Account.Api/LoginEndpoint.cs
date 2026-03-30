@@ -16,14 +16,14 @@ public class LoginEndpoint(ILogger<LoginEndpoint> logger, UserAccountService use
         try
         {
             var loginResponse = await userAccountService.Login(request);
-            
+
             Response = loginResponse;
             return loginResponse;
         }
         catch (LoginFailedException ex)
         {
             logger.LogError(ex, "Failed to login");
-            await SendErrorsAsync(400, ct);
+            await Send.ErrorsAsync(400, ct);
             return null;
         }
     }

@@ -1,28 +1,52 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    ":semanticCommitType(chore)",
-    ":semanticPrefixFixDepsChoreOthers",
     "config:best-practices",
-    "group:dotNetCore",
-    "schedule:daily"
+    ":semanticCommitType(chore)"
   ],
   "enabledManagers": [
     "github-actions",
-    "nuget"
+    "nuget",
+    "dockerfile",
+    "npm",
+    "dotnet-version"
   ],
   "labels": [
     "dependencies"
   ],
+  "commitMessageAction": "update",
+  "commitBody": "Signed-off-by: Renovate Bot <bot@renovateapp.com>",
+  "prConcurrentLimit": 50,
+  "prHourlyLimit": 0,
+  "platformAutomerge": true,
+  "automerge": true,
+  "automergeStrategy": "squash",
+  "ignoreTests": false,
+  "vulnerabilityAlerts": {
+    "labels": [
+      "security"
+    ],
+    "automerge": true,
+    "minimumReleaseAge": "0 days"
+  },
   "packageRules": [
     {
-      "groupName": "ApplicationInsights",
-      "matchPackageNames": [
-        "/ApplicationInsights/"
-      ]
+      "description": "Wait 3 days before automerging major updates",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "minimumReleaseAge": "3 days"
     },
     {
-      "groupName": "Dotnet",
+      "description": "Group GitHub Actions into one PR",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "groupName": "GitHub Actions"
+    },
+    {
+      "description": "Group .NET Docker images, disable major updates",
+      "groupName": "Dotnet Docker images",
       "matchPackageNames": [
         "dotnet-sdk",
         "mcr.microsoft.com/dotnet/aspnet",
@@ -36,48 +60,32 @@
       ]
     },
     {
+      "description": "Group ApplicationInsights packages",
+      "groupName": "ApplicationInsights",
+      "matchPackageNames": [
+        "/ApplicationInsights/"
+      ]
+    },
+    {
+      "description": "Group System.CommandLine packages",
       "groupName": "System.CommandLine",
       "matchPackageNames": [
         "System.CommandLine{/,}**"
       ]
     },
     {
+      "description": "Group XUnit test dependencies",
       "groupName": "XUnit",
       "matchPackageNames": [
-        "xunit{/,}**"
+        "/^xunit/"
       ]
     },
     {
-      "matchManagers": [
-        "github-actions"
-      ],
-      "groupName": "Pipeline dependencies"
-    },
-    {
-      "description": "Wait 3 days before automerging major updates",
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "minimumReleaseAge": "3 days"
+      "description": "Group Dapr SDK packages",
+      "groupName": "Dapr SDK",
+      "matchPackageNames": [
+        "/^Dapr/"
+      ]
     }
-  ],
-  "prConcurrentLimit": 50,
-  "prHourlyLimit": 0,
-  "dependencyDashboard": true,
-  "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
-  "automergeType": "branch",
-  "commitBody": "Signed-off-by: Renovate Bot <bot@renovateapp.com>",
-  "automerge": true,
-  "ignoreTests": false,
-  "commitMessageAction": "update",
-  "automergeStrategy": "squash",
-  "commitMessagePrefix": "chore(all): ",
-  "platformAutomerge": true,
-  "vulnerabilityAlerts": {
-    "labels": [
-      "security"
-    ],
-    "automerge": true,
-    "minimumReleaseAge": "0 days"
-  }
+  ]
 }

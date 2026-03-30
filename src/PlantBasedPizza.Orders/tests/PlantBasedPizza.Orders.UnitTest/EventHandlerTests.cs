@@ -27,12 +27,12 @@ public class EventHandlerTests
         features = new Mock<IFeatures>();
         idempotency = new Mock<Idempotency>();
     }
-    
+
     [Fact]
     public async Task HandlePaymentSuccessEvent_WhenEventStructureIsCorrectShouldSubmitOrder()
     {
         var testOrder = Order.Create(OrderType.Pickup, "testuser");
-        
+
         var inMemoryOrderRepository = new InMemoryOrderRepository();
         await inMemoryOrderRepository.Add(testOrder);
 
@@ -45,25 +45,25 @@ public class EventHandlerTests
 
         var sampleEvent = expectedPaymentSuccessSchema.ToSampleJson();
         var paymentSuccessEvent = JsonSerializer.Deserialize<PaymentSuccessfulEventV1>(sampleEvent.ToString()!);
-        
+
         await EventHandlers.HandlePaymentSuccessfulEvent(
             paymentSuccessEventHandler,
             idempotency.Object,
             new DefaultHttpContext(),
             paymentSuccessEvent
         );
-        
+
         var order = await inMemoryOrderRepository.Retrieve(paymentSuccessEvent.OrderIdentifier);
 
         order.Events.FirstOrDefault(evt => evt.EventName == "order.orderConfirmed" && evt.EventVersion == "v1").Should()
             .NotBeNull();
     }
-    
+
     [Fact]
     public async Task HandleInvalidPaymentSuccessEvent_WhenEventStructureIsInvalidShouldFail()
     {
         var testOrder = Order.Create(OrderType.Pickup, "testuser");
-        
+
         var inMemoryOrderRepository = new InMemoryOrderRepository(true);
         await inMemoryOrderRepository.Add(testOrder);
 
@@ -76,14 +76,14 @@ public class EventHandlerTests
 
         var sampleEvent = expectedPaymentSuccessSchema.ToSampleJson();
         var paymentSuccessEvent = JsonSerializer.Deserialize<PaymentSuccessfulEventV1>(sampleEvent.ToString()!);
-        
+
         var handlerResult = await EventHandlers.HandlePaymentSuccessfulEvent(
             paymentSuccessEventHandler,
             idempotency.Object,
             new DefaultHttpContext(),
             paymentSuccessEvent
         );
-        
+
         handlerResult.Should().BeOfType<InternalServerError>();
     }
 }

@@ -11,7 +11,7 @@ public class InMemoryOrderRepository : IOrderRepository
     {
         this.returnInvalidOrder = returnInvalidOrder;
     }
-    
+
     public async Task Add(Order order)
     {
         this.order = order;

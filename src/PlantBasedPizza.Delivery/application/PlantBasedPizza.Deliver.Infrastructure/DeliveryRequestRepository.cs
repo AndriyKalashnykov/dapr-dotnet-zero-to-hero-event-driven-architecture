@@ -17,11 +17,11 @@ namespace PlantBasedPizza.Deliver.Infrastructure
             _collection = database.GetCollection<DeliveryRequest>("DeliveryRequests");
             _outboxItems = database.GetCollection<OutboxItem>("DeliveryRequests_outboxitems");
         }
-        
+
         public async Task AddNewDeliveryRequest(DeliveryRequest request, List<IntegrationEvent> events = null)
         {
             await _collection.InsertOneAsync(request).ConfigureAwait(false);
-            
+
             foreach (var evt in (events ?? new()))
             {
                 await _outboxItems.InsertOneAsync(new OutboxItem()
@@ -38,7 +38,7 @@ namespace PlantBasedPizza.Deliver.Infrastructure
             var queryBuilder = Builders<DeliveryRequest>.Filter.Eq(ord => ord.OrderIdentifier, request.OrderIdentifier);
 
             var replaceResult = await _collection.ReplaceOneAsync(queryBuilder, request);
-            
+
             foreach (var evt in (events ?? new()))
             {
                 await _outboxItems.InsertOneAsync(new OutboxItem()
@@ -48,7 +48,7 @@ namespace PlantBasedPizza.Deliver.Infrastructure
                     Processed = false
                 });
             }
-            
+
             replaceResult.AddToTelemetry();
         }
 
@@ -73,7 +73,7 @@ namespace PlantBasedPizza.Deliver.Infrastructure
         public async Task<List<DeliveryRequest>> GetOrdersWithDriver(string driverName)
         {
             var requests = await _collection.Find(p => p.DeliveredOn == null && p.DriverCollectedOn != null && p.Driver == driverName).ToListAsync();
-            
+
             Activity.Current?.AddTag("mongo.findCount", requests.Count);
 
             return requests;

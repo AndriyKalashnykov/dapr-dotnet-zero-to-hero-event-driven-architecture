@@ -12,16 +12,16 @@ public class DeliveryEventPublisher(DaprClient daprClient) : IDeliveryEventPubli
     private const string SOURCE = "delivery";
     private const string PUB_SUB_NAME = "public";
     private const string DATE_FORMAT = "yyyy-MM-ddTHH:mm:ssZ";
-    
+
     [Channel("delivery.driverCollectedOrder.v1")]
     [SubscribeOperation(typeof(DriverCollectedOrderEventV1), OperationId = nameof(DriverCollectedOrderEventV1), Summary = "Published when a driver collects an order.")]
     public async Task PublishDriverOrderCollectedEventV1(DriverCollectedOrderEventV1 evt)
     {
         var eventType = $"{evt.EventName}.{evt.EventVersion}";
         var eventId = Guid.NewGuid().ToString();
-        
+
         evt.AddToTelemetry(eventId);
-        
+
         var eventMetadata = new Dictionary<string, string>(3)
         {
             { EventConstants.EVENT_SOURCE_HEADER_KEY, SOURCE },
@@ -29,7 +29,7 @@ public class DeliveryEventPublisher(DaprClient daprClient) : IDeliveryEventPubli
             { EventConstants.EVENT_ID_HEADER_KEY, eventId },
             { EventConstants.EVENT_TIME_HEADER_KEY, DateTime.UtcNow.ToString(DATE_FORMAT) },
         };
-        
+
         await daprClient.PublishEventAsync(PUB_SUB_NAME, eventType, evt, eventMetadata);
     }
 
@@ -39,9 +39,9 @@ public class DeliveryEventPublisher(DaprClient daprClient) : IDeliveryEventPubli
     {
         var eventType = $"{evt.EventName}.{evt.EventVersion}";
         var eventId = Guid.NewGuid().ToString();
-        
+
         evt.AddToTelemetry(eventId);
-        
+
         var eventMetadata = new Dictionary<string, string>(3)
         {
             { EventConstants.EVENT_SOURCE_HEADER_KEY, SOURCE },
@@ -49,7 +49,7 @@ public class DeliveryEventPublisher(DaprClient daprClient) : IDeliveryEventPubli
             { EventConstants.EVENT_ID_HEADER_KEY, eventId },
             { EventConstants.EVENT_TIME_HEADER_KEY, DateTime.UtcNow.ToString(DATE_FORMAT) },
         };
-        
+
         await daprClient.PublishEventAsync(PUB_SUB_NAME, eventType, evt, eventMetadata);
     }
 }

@@ -12,7 +12,7 @@ public enum RecipeCategory
 public class Recipe
 {
     private List<Ingredient> _ingredients;
-        
+
     [JsonConstructor]
     private Recipe()
     {
@@ -20,7 +20,7 @@ public class Recipe
         Name = "";
         _ingredients = new List<Ingredient>();
     }
-        
+
     public Recipe(RecipeCategory category, string recipeIdentifier, string name, decimal price)
     {
         Category = category;
@@ -29,16 +29,16 @@ public class Recipe
         Price = price;
         _ingredients = new List<Ingredient>();
     }
-        
+
     [JsonPropertyName("recipeIdentifier")]
     public string RecipeIdentifier { get; private set; }
-        
+
     [JsonPropertyName("category")]
     public RecipeCategory Category { get; private set; }
-        
+
     [JsonPropertyName("name")]
     public string Name { get; private set; }
-        
+
     [JsonPropertyName("price")]
     public decimal Price { get; private set; }
 
@@ -51,7 +51,7 @@ public class Recipe
         {
             _ingredients = new List<Ingredient>();
         }
-            
+
         _ingredients.Add(new Ingredient(name, quantity));
     }
 }

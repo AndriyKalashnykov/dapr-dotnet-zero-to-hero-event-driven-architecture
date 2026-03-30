@@ -6,7 +6,7 @@ namespace PlantBasedPizza.Orders.IntegrationTest.ViewModels
     {
         [JsonPropertyName("description")]
         public string Description { get; set; }
-        
+
         [JsonPropertyName("historyDate")]
         public DateTime HistoryDate { get; set; }
     }

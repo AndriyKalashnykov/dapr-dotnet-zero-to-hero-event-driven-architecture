@@ -9,7 +9,7 @@ public class OrderService(Orders.Internal.Orders.OrdersClient orderClient) : IOr
     {
         { "dapr-app-id", "orders-internal" }
     };
-    
+
     public async Task<Order> GetOrderDetails(string orderIdentifier)
     {
         var order = await orderClient.GetOrderDetailsAsync(new GetOrderDetailsRequest()

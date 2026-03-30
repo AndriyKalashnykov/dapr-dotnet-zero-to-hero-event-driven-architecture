@@ -1,41 +1,98 @@
+[![CI](https://github.com/AndriyKalashnykov/dapr-dotnet-zero-to-hero-event-driven-architecture/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/AndriyKalashnykov/dapr-dotnet-zero-to-hero-event-driven-architecture/actions/workflows/ci.yml)
+[![Hits](https://hits.sh/github.com/AndriyKalashnykov/dapr-dotnet-zero-to-hero-event-driven-architecture.svg?view=today-total&style=plastic)](https://hits.sh/github.com/AndriyKalashnykov/dapr-dotnet-zero-to-hero-event-driven-architecture/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+[![Renovate enabled](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://app.renovatebot.com/dashboard#github/AndriyKalashnykov/dapr-dotnet-zero-to-hero-event-driven-architecture)
+
 # Plant Based Pizza
 
-This folder contains all the sample application for running the PlantBasedPizza application. 
+A C#/.NET 9 microservices application demonstrating event-driven architecture using [Dapr](https://dapr.io/). Based on the [Dometrain Zero to Hero Event-Driven Architecture](https://github.com/Dometrain/zero-to-hero-event-driven-architecture/tree/main/module6) course. Services include Account, Delivery, Kitchen, Loyalty Points, Orders, Payments, and Recipes.
+
+## Quick Start
+
+```bash
+make restore        # restore NuGet packages
+make build          # build the solution
+make test           # run all tests
+make image-build    # build Docker images for all services
+make run-local      # start all services via Docker Compose
+```
 
 ## Prerequisites
 
-- [.NET9](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
-- Docker client
-- Make
-    - [For Windows](https://gnuwin32.sourceforge.net/packages/make.htm)
-    - [For Mac](https://formulae.brew.sh/formula/make)
-    - [Linux](https://askubuntu.com/questions/161104/how-do-i-install-make)
+| Tool | Version | Purpose |
+|------|---------|---------|
+| [.NET SDK](https://dotnet.microsoft.com/download) | 9.0+ | Build and run the application |
+| [Docker](https://www.docker.com/) | latest | Container builds and local infrastructure |
+| [GNU Make](https://www.gnu.org/software/make/) | 3.81+ | Build orchestration |
+| [Dapr CLI](https://docs.dapr.io/getting-started/install-dapr-cli/) | latest | Run individual services locally (optional) |
 
+Install all required dependencies:
 
-## Running Locally
+```bash
+make deps
+```
 
-There are several steps to running the application locally:
+## Available Make Targets
 
-1. Build the container images for all services: `make build` or `make-build-arm` depending on your system CPU architecture
-2. Start the backend service containers and required infrastructure: `docker-compose up -d`, wait for all containers to start and then `docker compose -f docker-compose-services.yml up -d`
-3. Start the frontend: `make start-frontend`
-4. Once up and running you can go and register a new user to start interacting with the system
-    - If you are trying to login to the [admin interface](http://localhost:3000/admin/login) a default user is created with credentials `admin@plantbasedpizza.com`:`AdminAccount!23`
+Run `make help` to see all available targets.
 
-## Starting an individual service
+### Build & Run
 
-All the individual microservices can run independently, and all follow the same structure inside their respective folder under [src](./src/):
+| Target | Description |
+|--------|-------------|
+| `make restore` | Restore NuGet packages |
+| `make build` | Build the solution |
+| `make test` | Run all tests |
+| `make lint` | Check code formatting |
+| `make clean` | Clean build artifacts |
+| `make run-local` | Start all services locally via Docker Compose |
 
-1. Start up required infrastructure: `docker-compose up -d`
-2. Start up the API component and Dapr sidecar, you'll need two separate terminal windows:
+### Docker
+
+| Target | Description |
+|--------|-------------|
+| `make image-build` | Build Docker images for all services |
+| `make image-build-arm` | Build Docker images (ARM) for all services |
+
+### CI
+
+| Target | Description |
+|--------|-------------|
+| `make ci` | Full CI pipeline: restore, lint, build, test |
+| `make ci-run` | Run GitHub Actions workflow locally via [act](https://github.com/nektos/act) |
+
+### Utilities
+
+| Target | Description |
+|--------|-------------|
+| `make deps` | Install and verify required dependencies |
+| `make renovate-validate` | Validate Renovate configuration |
+| `make release` | Create and push a new semver tag |
+
+## Running Individual Services
+
+All microservices can run independently from their respective folder under [src](./src/):
+
+1. Start infrastructure: `docker-compose up -d`
+2. Start the API and Dapr sidecar (two terminals):
     - `make local-api`
     - `make dapr-api-sidecar`
-3. If the specific microservice has a worker component for handling events start them as well, you'll need two more terminal windows:
+3. If the service has a worker component (two more terminals):
     - `make local-worker`
     - `make dapr-worker-sidecar`
-4. You can switch out either `make local-api` or `make local-worker` with starting the application inside your IDE in debug mode
 
-This will run the individual microservice locally.
+Admin interface: [http://localhost:3000/admin/login](http://localhost:3000/admin/login) — default credentials: `admin@plantbasedpizza.com` / `AdminAccount!23`
+
+## CI/CD
+
+GitHub Actions runs on every push to `main`, tags `v*`, and pull requests.
+
+| Job | Triggers | Steps |
+|-----|----------|-------|
+| **ci** | push, PR, tags | Restore, Lint, Build, Test |
+| **cleanup** | weekly (Sunday) | Delete old workflow runs (>7 days, keep 5 min) |
+
+[Renovate](https://docs.renovatebot.com/) keeps dependencies up to date with platform automerge enabled.
 
 ### References
 

@@ -8,7 +8,7 @@ namespace PlantBasedPizza.Recipes.Core.Entities
         private Ingredient()
         {
         }
-        
+
         public Ingredient(string name, int quantity)
         {
             Name = name;

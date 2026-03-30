@@ -19,7 +19,7 @@ public class OrderManagerTests
         order.OrderDate.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
         order.OrderType.Should().Be(OrderType.Pickup);
     }
-    
+
     [Fact]
     public void CanCreateOrderAndAddHistory_ShouldAddHistoryItem()
     {
@@ -29,7 +29,7 @@ public class OrderManagerTests
 
         order.History().Count.Should().Be(2);
     }
-    
+
     [Fact]
     public void CanSetIsAwaitingCollection_ShouldMarkAwaitingAndAddHistory()
     {
@@ -40,14 +40,14 @@ public class OrderManagerTests
         order.History().Count.Should().Be(2);
         order.AwaitingCollection.Should().BeTrue();
     }
-    
+
     [Fact]
     public void CanCreateNewOrderAndAddItems_ShouldAddToItemArray()
     {
         var order = Order.Create(OrderType.Pickup, DefaultCustomerIdentifier);
 
         var recipeId = "PIZZA1";
-        
+
         order.AddOrderItem(recipeId, "Pizza 1", 1, 10);
         order.AddOrderItem(recipeId, "Pizza 1", 3, 10);
         order.AddOrderItem("CHIPS", "Chips", 1, 3);
@@ -56,19 +56,19 @@ public class OrderManagerTests
         order.Items.FirstOrDefault(p => p.RecipeIdentifier == recipeId).Quantity.Should().Be(4);
         order.TotalPrice.Should().Be(43);
     }
-    
+
     [Fact]
     public void CanCreateNewOrderAndRemoveItems_ShouldRemove()
     {
         var order = Order.Create(OrderType.Pickup, DefaultCustomerIdentifier);
 
         var recipeId = "PIZZA1";
-        
+
         order.AddOrderItem(recipeId, "Pizza 1", 1, 10);
         order.AddOrderItem(recipeId, "Pizza 1", 3, 10);
         order.AddOrderItem("CHIPS", "Chips", 1, 3);
         order.AddOrderItem("COCACOLA", "Coca Cola", 2, 1);
-        
+
         order.RemoveOrderItem(recipeId, 2);
         order.RemoveOrderItem("COCACOLA", 2);
 
@@ -76,7 +76,7 @@ public class OrderManagerTests
         order.Items.FirstOrDefault(p => p.RecipeIdentifier == recipeId).Quantity.Should().Be(2);
         order.TotalPrice.Should().Be(23);
     }
-    
+
     [Fact]
     public void CanCreateNewDeliveryOrder_ShouldGetDeliveryDetails()
     {
@@ -93,7 +93,7 @@ public class OrderManagerTests
         order.OrderType.Should().Be(OrderType.Delivery);
         order.DeliveryDetails.AddressLine1.Should().Be("TEST");
     }
-    
+
     [Fact]
     public void CanCreateNewDeliveryOrder_ShouldAddDeliveryCharge()
     {
@@ -102,12 +102,12 @@ public class OrderManagerTests
             AddressLine1 = "TEST",
             Postcode = "XN6 7UY"
         });
-        
+
         order.AddOrderItem("PIZZA", "Pizza 1", 1, 10);
 
         order.TotalPrice.Should().Be(13.50M);
     }
-    
+
     [Fact]
     public void CanCreateAndSubmitOrder_ShouldBeSubmitted()
     {
@@ -116,14 +116,14 @@ public class OrderManagerTests
             AddressLine1 = "TEST",
             Postcode = "XN6 7UY"
         });
-        
+
         order.AddOrderItem("PIZZA", "Pizza 1", 1, 10);
 
         order.SubmitOrder();
 
         order.OrderSubmittedOn.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
     }
-    
+
     [Fact]
     public void AddItemsToASubmittedOrder_ShouldNotAdd()
     {
@@ -132,16 +132,16 @@ public class OrderManagerTests
             AddressLine1 = "TEST",
             Postcode = "XN6 7UY"
         });
-        
+
         order.AddOrderItem("PIZZA", "Pizza 1", 1, 10);
 
         order.SubmitOrder();
-        
+
         order.AddOrderItem("PIZZA", "Pizza 1", 1, 10);
 
         order.Items.FirstOrDefault().Quantity.Should().Be(1);
     }
-    
+
     [Fact]
     public void CanCreateAndCompletetOrder_ShouldBeCompleted()
     {
@@ -150,7 +150,7 @@ public class OrderManagerTests
             AddressLine1 = "TEST",
             Postcode = "XN6 7UY"
         });
-        
+
         order.AddOrderItem("PIZZA", "Pizza 1", 1, 10);
 
         order.CompleteOrder();
@@ -158,20 +158,20 @@ public class OrderManagerTests
         order.OrderCompletedOn.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
         order.AwaitingCollection.Should().BeFalse();
     }
-    
-    
+
+
     [Fact]
     public void SubmitOrderWithNoItems_ShouldError()
     {
         Assert.Throws<ArgumentException>(() =>
         {
             var order = Order.Create(OrderType.Pickup, DefaultCustomerIdentifier);
-            
+
             order.SubmitOrder();
         });
     }
-    
-    
+
+
     [Fact]
     public void CanCreateNewOrderWithNoCustomerIdentifier_ShouldError()
     {
@@ -180,8 +180,8 @@ public class OrderManagerTests
             Order.Create(OrderType.Pickup, string.Empty);
         });
     }
-    
-    
+
+
     [Fact]
     public void CanCreateNewDeliveryOrderWithNoDeliveryDetails_ShouldError()
     {

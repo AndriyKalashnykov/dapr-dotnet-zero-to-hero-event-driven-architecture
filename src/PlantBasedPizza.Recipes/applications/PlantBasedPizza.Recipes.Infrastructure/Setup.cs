@@ -11,12 +11,12 @@ namespace PlantBasedPizza.Recipes.Infrastructure
     {
         public static IServiceCollection AddRecipeInfrastructure(this IServiceCollection services,
             IConfiguration configuration)
-        {         
+        {
             var client = new MongoClient(configuration["DatabaseConnection"]);
 
             services.AddSingleton(client);
             services.AddDaprClient();
-            
+
             BsonClassMap.RegisterClassMap<Recipe>(map =>
             {
                 map.AutoMap();
@@ -24,14 +24,14 @@ namespace PlantBasedPizza.Recipes.Infrastructure
                 map.SetIgnoreExtraElements(true);
                 map.SetIgnoreExtraElementsIsInherited(true);
             });
-            
+
             BsonClassMap.RegisterClassMap<Ingredient>(map =>
             {
                 map.AutoMap();
                 map.SetIgnoreExtraElements(true);
                 map.SetIgnoreExtraElementsIsInherited(true);
             });
-            
+
             services.AddSingleton<IRecipeRepository, RecipeRepository>();
 
             return services;

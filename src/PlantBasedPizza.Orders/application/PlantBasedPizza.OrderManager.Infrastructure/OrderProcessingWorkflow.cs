@@ -59,7 +59,7 @@ public class OrderProcessingWorkflow : IOrderWorkflow
             await WaitForDelivery();
         else
             await WaitForCollection();
-        
+
         _currentStatus = OrderStatus.Completed;
 
         return _currentStatus;
@@ -80,7 +80,8 @@ public class OrderProcessingWorkflow : IOrderWorkflow
             (OrderActivities act) => act.CancelOrder(_currentOrder!.OrderIdentifier),
             new ActivityOptions
             {
-                ScheduleToCloseTimeout = TimeSpan.FromSeconds(30), RetryPolicy = new RetryPolicy
+                ScheduleToCloseTimeout = TimeSpan.FromSeconds(30),
+                RetryPolicy = new RetryPolicy
                 {
                     MaximumAttempts = 3,
                     BackoffCoefficient = 2
@@ -96,7 +97,8 @@ public class OrderProcessingWorkflow : IOrderWorkflow
             (OrderActivities act) => act.OrderReadyForDelivery(_currentOrder!.OrderIdentifier),
             new ActivityOptions
             {
-                ScheduleToCloseTimeout = TimeSpan.FromSeconds(30), RetryPolicy = new RetryPolicy
+                ScheduleToCloseTimeout = TimeSpan.FromSeconds(30),
+                RetryPolicy = new RetryPolicy
                 {
                     MaximumAttempts = 3,
                     BackoffCoefficient = 2
@@ -112,7 +114,8 @@ public class OrderProcessingWorkflow : IOrderWorkflow
             (OrderActivities act) => act.OrderDelivered(_currentOrder!.OrderIdentifier),
             new ActivityOptions
             {
-                ScheduleToCloseTimeout = TimeSpan.FromSeconds(30), RetryPolicy = new RetryPolicy
+                ScheduleToCloseTimeout = TimeSpan.FromSeconds(30),
+                RetryPolicy = new RetryPolicy
                 {
                     MaximumAttempts = 3,
                     BackoffCoefficient = 2
@@ -128,7 +131,8 @@ public class OrderProcessingWorkflow : IOrderWorkflow
             (OrderActivities act) => act.OrderCollected(_currentOrder!.OrderIdentifier),
             new ActivityOptions
             {
-                ScheduleToCloseTimeout = TimeSpan.FromSeconds(30), RetryPolicy = new RetryPolicy
+                ScheduleToCloseTimeout = TimeSpan.FromSeconds(30),
+                RetryPolicy = new RetryPolicy
                 {
                     MaximumAttempts = 3,
                     BackoffCoefficient = 2
@@ -162,7 +166,8 @@ public class OrderProcessingWorkflow : IOrderWorkflow
             (OrderActivities act) => act.SubmitOrder(_currentOrder!),
             new ActivityOptions
             {
-                ScheduleToCloseTimeout = TimeSpan.FromMinutes(2), RetryPolicy = new RetryPolicy
+                ScheduleToCloseTimeout = TimeSpan.FromMinutes(2),
+                RetryPolicy = new RetryPolicy
                 {
                     MaximumAttempts = 3,
                     BackoffCoefficient = 2
@@ -176,7 +181,8 @@ public class OrderProcessingWorkflow : IOrderWorkflow
             (OrderActivities act) => act.TakePayment(_currentOrder!),
             new ActivityOptions
             {
-                ScheduleToCloseTimeout = TimeSpan.FromMinutes(2), RetryPolicy = new RetryPolicy
+                ScheduleToCloseTimeout = TimeSpan.FromMinutes(2),
+                RetryPolicy = new RetryPolicy
                 {
                     MaximumAttempts = 3,
                     BackoffCoefficient = 2
@@ -192,7 +198,8 @@ public class OrderProcessingWorkflow : IOrderWorkflow
             (OrderActivities act) => act.ConfirmOrder(_currentOrder!.OrderIdentifier, _paymentAmount),
             new ActivityOptions
             {
-                ScheduleToCloseTimeout = TimeSpan.FromSeconds(10), RetryPolicy = new RetryPolicy
+                ScheduleToCloseTimeout = TimeSpan.FromSeconds(10),
+                RetryPolicy = new RetryPolicy
                 {
                     MaximumAttempts = 3,
                     BackoffCoefficient = 2
@@ -209,7 +216,8 @@ public class OrderProcessingWorkflow : IOrderWorkflow
                 (OrderActivities act) => act.RefundPayment(_currentOrder!),
                 new ActivityOptions
                 {
-                    ScheduleToCloseTimeout = TimeSpan.FromMinutes(2), RetryPolicy = new RetryPolicy
+                    ScheduleToCloseTimeout = TimeSpan.FromMinutes(2),
+                    RetryPolicy = new RetryPolicy
                     {
                         MaximumAttempts = 3,
                         BackoffCoefficient = 2

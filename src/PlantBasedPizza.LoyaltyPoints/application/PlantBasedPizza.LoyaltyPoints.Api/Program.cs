@@ -2,6 +2,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MongoDB.Driver;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
@@ -41,7 +42,7 @@ var serviceName = "LoyaltyApi";
 builder.Services
     .AddLoyaltyServices(builder.Configuration, serviceName)
     .AddHealthChecks()
-    .AddMongoDb(builder.Configuration["DatabaseConnection"]);
+    .AddMongoDb(sp => sp.GetRequiredService<MongoClient>());
 
 var app = builder.Build();
 
@@ -62,7 +63,7 @@ app.MapHealthChecks("/loyalty/health", new HealthCheckOptions
 app.MapGet("/loyalty", async (ClaimsPrincipal user) =>
 {
     var accountId = user.Claims.ExtractAccountId();
-    
+
     var loyalty = await loyaltyRepo.GetCurrentPointsFor(accountId);
 
     if (loyalty == null)

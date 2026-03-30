@@ -14,7 +14,7 @@ public class LoyaltyServiceHealthChecks(
     {
         var isHealthy = true;
         var healthCheckResult = new Dictionary<string, object>();
-        
+
         try
         {
             using var cancellationTokenSource = new CancellationTokenSource();
@@ -24,7 +24,7 @@ public class LoyaltyServiceHealthChecks(
                 { "dapr-app-id", "loyaltyinternal" }
             };
             await loyaltyClient.GetCustomerLoyaltyPointsAsync(new GetCustomerLoyaltyPointsRequest
-                { CustomerIdentifier = "james" }, metadata);
+            { CustomerIdentifier = "james" }, metadata);
 
             healthCheckResult.Add("loyalty.api", "healthy");
         }

@@ -21,10 +21,10 @@ public sealed class PaymentSteps
     public async Task ThenAOrderSubmittedEventIsHandled()
     {
         Activity.Current = _scenarioContext.Get<Activity>("Activity");
-        
+
         var orderIdentifier = Guid.NewGuid().ToString();
         _scenarioContext.Add("orderId", orderIdentifier);
-        
+
         await _driver.SimulateOrderSubmittedEvent(orderIdentifier);
     }
 
@@ -32,7 +32,7 @@ public sealed class PaymentSteps
     public async Task ThenThePaymentShouldBeProcessedAndCached()
     {
         var orderId = _scenarioContext.Get<string>("orderId");
-        
+
         var paymentStatus = await _driver.GetCachedPaymentStatus(orderId);
         paymentStatus.Should().NotBeNull();
         paymentStatus.Should().Be("processed");

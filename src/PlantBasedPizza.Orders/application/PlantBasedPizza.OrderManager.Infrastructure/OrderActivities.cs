@@ -27,13 +27,13 @@ public class OrderActivities(SubmitOrderCommandHandler submitOrderHandler,
             CustomerIdentifier = order.CustomerIdentifier,
         });
     }
-    
+
     [Activity]
     public async Task TakePayment(OrderDto order)
     {
         await paymentService.TakePayment(order.OrderIdentifier, order.TotalPrice);
     }
-    
+
     [Activity]
     public async Task RefundPayment(OrderDto order)
     {

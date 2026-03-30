@@ -23,7 +23,7 @@ public class EventDriver
     private readonly DaprClient _daprClient;
     private readonly IDeadLetterRepository _deadLetterRepository;
     private const string DATE_FORMAT = "yyyy-MM-ddTHH:mm:ssZ";
-    
+
     public EventDriver()
     {
         _daprClient = new DaprClientBuilder()
@@ -133,9 +133,9 @@ public class EventDriver
     public async Task<DeadLetterMessage?> VerifyEventReachesDeadLetterInbox(string eventId)
     {
         var deadLetterMessages = await _deadLetterRepository.GetDeadLetterItems();
-        
+
         var specificMessage = deadLetterMessages.FirstOrDefault(x => x.EventId == eventId);
-        
+
         return specificMessage;
     }
 }
@@ -143,6 +143,6 @@ public class EventDriver
 record InvalidPaymentSuccessEvent
 {
     public string OrderId { get; set; }
-    
+
     public decimal Money { get; set; }
 }

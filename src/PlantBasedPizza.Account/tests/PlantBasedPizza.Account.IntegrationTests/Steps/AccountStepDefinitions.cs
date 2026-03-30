@@ -31,7 +31,7 @@ public class AccountStepDefinitions
 
         var emailAddress = $"{Guid.NewGuid().ToString()}@test.com";
         _scenarioContext.Add("emailAddress", emailAddress);
-        
+
         var password = $"{Guid.NewGuid()}!A23";
         _scenarioContext.Add("password", password);
 
@@ -46,7 +46,7 @@ public class AccountStepDefinitions
         Activity.Current = _scenarioContext.Get<Activity>("Activity");
         var emailAddress = _scenarioContext.Get<string>("emailAddress");
         var password = _scenarioContext.Get<string>("password");
-            
+
         var loginResponse = await _driver.Login(emailAddress, password);
 
         loginResponse.Should().NotBeNull();
@@ -71,7 +71,7 @@ public class AccountStepDefinitions
 
         var emailAddress = $"{Guid.NewGuid().ToString()}@test.com";
         var password = "1234";
-        
+
         _scenarioContext.Add("emailAddress", emailAddress);
         _scenarioContext.Add("password", password);
     }
@@ -94,29 +94,29 @@ public class AccountStepDefinitions
 
         var emailAddress = $"{Guid.NewGuid().ToString()}@test.com";
         var password = "";
-        
+
         _scenarioContext.Add("emailAddress", emailAddress);
         _scenarioContext.Add("password", password);
     }
-    
+
     [Then("they should not be able to login with an invalid password")]
     public async Task ThenTheyShouldNotLoginWithAnInvalidPassword()
     {
         Activity.Current = _scenarioContext.Get<Activity>("Activity");
         var emailAddress = _scenarioContext.Get<string>("emailAddress");
-            
+
         var loginResponse = await _driver.Login(emailAddress, "some random stuff");
 
         loginResponse.Should().BeNull();
     }
-    
+
     [Then("they should not be able to login")]
     public async Task ThenTheyCantLogin()
     {
         Activity.Current = _scenarioContext.Get<Activity>("Activity");
         var emailAddress = _scenarioContext.Get<string>("emailAddress");
         var password = _scenarioContext.Get<string>("password");
-            
+
         var loginResponse = await _driver.Login(emailAddress, "some random stuff");
 
         loginResponse.Should().BeNull();

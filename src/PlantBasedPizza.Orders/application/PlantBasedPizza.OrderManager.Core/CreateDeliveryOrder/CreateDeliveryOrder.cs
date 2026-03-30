@@ -10,10 +10,10 @@ namespace PlantBasedPizza.OrderManager.Core.CreateDeliveryOrder
 
         [JsonPropertyName("orderType")]
         public OrderType OrderType => OrderType.Delivery;
-        
+
         [JsonPropertyName("addressLine1")]
         public string AddressLine1 { get; init; } = "";
-        
+
         [JsonPropertyName("addressLine2")]
         public string AddressLine2 { get; init; } = "";
 

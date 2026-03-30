@@ -28,19 +28,19 @@ public static class AuthConfig
                 ValidateIssuerSigningKey = true
             };
         });
-        
+
         logger.LogInformation("Added auth configuration");
-        
+
         builder.Services.AddAuthorization(options =>
         {
             options.AddPolicy("admin", x => x.RequireRole("admin"));
             options.AddPolicy("staff", x => x.RequireRole("staff"));
         });
-        
+
         builder.Services.Configure<JwtConfiguration>(builder.Configuration.GetSection("Auth"));
-        
+
         logger.LogInformation("Added auth configuration");
-        
+
         return services;
     }
 }

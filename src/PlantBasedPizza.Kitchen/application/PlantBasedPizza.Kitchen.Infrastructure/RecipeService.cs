@@ -30,13 +30,13 @@ namespace PlantBasedPizza.Kitchen.Infrastructure
                 Activity.Current?.AddTag("cache_hit", true);
                 return JsonSerializer.Deserialize<RecipeAdapter>(cachedRecipe);
             }
-            
+
             var recipeResult = await _httpClient.GetAsync($"http://{_serviceEndpoints.Recipes}/recipes/{recipeIdentifier}");
 
             var recipeData = await recipeResult.Content.ReadAsStringAsync();
 
             var recipe = JsonSerializer.Deserialize<RecipeAdapter>(recipeData);
-            
+
             await _distributedCache.SetStringAsync(recipeIdentifier, recipeData);
 
             return recipe;

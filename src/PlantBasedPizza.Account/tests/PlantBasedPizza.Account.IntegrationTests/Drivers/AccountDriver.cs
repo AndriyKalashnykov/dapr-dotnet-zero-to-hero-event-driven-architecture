@@ -25,7 +25,7 @@ namespace PlantBasedPizza.Account.IntegrationTests.Drivers
 
             var registerResult = await _httpClient.PostAsync(new Uri($"{BaseUrl}/account/register"),
                 new StringContent(requestBody, Encoding.Default, "application/json"));
-            
+
             return registerResult.IsSuccessStatusCode
                 ? JsonSerializer.Deserialize<RegisterResponse>(await registerResult.Content.ReadAsStringAsync())
                 : null;

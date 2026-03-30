@@ -6,8 +6,8 @@ namespace PlantBasedPizza.Recipes.Core.Commands
     {
         [JsonPropertyName("recipeIdentifier")]
         public string RecipeIdentifier { get; init; } = "";
-        
-        
+
+
         [JsonPropertyName("category")]
         public string Category { get; init; } = "";
 

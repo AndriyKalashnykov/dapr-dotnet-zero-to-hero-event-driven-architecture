@@ -20,11 +20,11 @@ public class CustomerLoyaltyPoints
             History = new List<LoyaltyPointsHistory>()
         };
     }
-    
+
     public string CustomerId { get; set; }
 
     public decimal TotalPoints { get; set; }
-    
+
     public List<LoyaltyPointsHistory> History { get; set; }
 
     public void AddLoyaltyPoints(decimal orderValue, string orderIdentifier)
@@ -57,9 +57,9 @@ public class CustomerLoyaltyPoints
         {
             return;
         }
-        
+
         var remainingPoints = TotalPoints - points;
-        
+
         if (remainingPoints < 0)
         {
             throw new InsufficientPointsException();
@@ -79,10 +79,10 @@ public class CustomerLoyaltyPoints
 public class LoyaltyPointsHistory
 {
     public DateTime DateTime { get; set; }
-    
+
     public string OrderIdentifier { get; set; }
-    
+
     public decimal OrderValue { get; set; }
-    
+
     public decimal PointsAdded { get; set; }
 }

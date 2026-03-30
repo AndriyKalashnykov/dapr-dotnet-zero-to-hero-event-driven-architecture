@@ -111,7 +111,7 @@ public static class Setup
             });
 
         services.AddCaching(configuration);
-        
+
         services.Configure<Features>(configuration.GetSection("Features"));
         services.AddSingleton<IFeatures, ConfigFeatureProvider>();
 
@@ -121,7 +121,7 @@ public static class Setup
         services.AddSingleton<ILoyaltyPointService, LoyaltyPointService>();
         services.AddSingleton<IOrderEventPublisher, OrderEventPublisher>();
         services.AddSingleton<IPaymentService, PaymentService>();
-        
+
         services.AddSingleton<CollectOrderCommandHandler>();
         services.AddSingleton<AddItemToOrderHandler>();
         services.AddSingleton<CreateDeliveryOrderCommandHandler>();
@@ -131,11 +131,11 @@ public static class Setup
         services.AddSingleton<OrderReadyForDeliveryCommandHandler>();
         services.AddSingleton<ConfirmOrderCommandHandler>();
         services.AddSingleton<OrderDeliveredEventHandler>();
-        
+
         services.AddSignalR();
         services.AddSingleton<IUserIdProvider, UserIdClaimUserProvider>();
         services.AddSingleton<IUserNotificationService, UserNotificationService>();
-        
+
         services.AddHttpClient("retry-http-client")
             .SetHandlerLifetime(TimeSpan.FromMinutes(5))
             .AddPolicyHandler(GetRetryPolicy());

@@ -10,7 +10,7 @@ namespace PlantBasedPizza.OrderManager.Core.Entities
             RecipeIdentifier = "";
             ItemName = "";
         }
-        
+
         internal OrderItem(string recipeIdentifier, string itemName, int quantity, decimal price)
         {
             RecipeIdentifier = recipeIdentifier;
@@ -18,16 +18,16 @@ namespace PlantBasedPizza.OrderManager.Core.Entities
             Quantity = quantity;
             Price = price;
         }
-        
+
         [JsonPropertyName("recipeIdentifier")]
         public string RecipeIdentifier { get; private set; }
-        
+
         [JsonPropertyName("itemName")]
         public string ItemName { get; private set; }
-        
+
         [JsonPropertyName("quantity")]
         public int Quantity { get; private set; }
-        
+
         [JsonPropertyName("price")]
         public decimal Price { get; private set; }
     }

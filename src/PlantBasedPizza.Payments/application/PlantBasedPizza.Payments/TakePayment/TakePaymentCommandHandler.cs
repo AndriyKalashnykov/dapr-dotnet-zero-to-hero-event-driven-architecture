@@ -25,7 +25,7 @@ public class TakePaymentCommandHandler(ILogger<TakePaymentCommandHandler> logger
             var randomSecondDelay = RandomNumberGenerator.GetInt32(1, 250);
 
             await Task.Delay(TimeSpan.FromMilliseconds(randomSecondDelay));
-        
+
             logger.LogInformation("Publishing Payment Success Event");
 
             var successEvent = new PaymentSuccessfulEventV1()
@@ -33,9 +33,9 @@ public class TakePaymentCommandHandler(ILogger<TakePaymentCommandHandler> logger
                 OrderIdentifier = command.OrderIdentifier,
                 Amount = Convert.ToDecimal(command.PaymentAmount)
             };
-            
+
             await eventPublisher.PublishPaymentSuccessfulEventV1(successEvent);
-            
+
             await cache.SetStringAsync(command.OrderIdentifier, "processed");
 
             return true;
@@ -44,7 +44,7 @@ public class TakePaymentCommandHandler(ILogger<TakePaymentCommandHandler> logger
         {
             logger.LogError(ex, "Failure processing payment for order {OrderIdentifier}", command.OrderIdentifier);
             Activity.Current?.AddException(ex);
-            
+
             await eventPublisher.PublishPaymentFailedEventV1(new PaymentFailedEventV1()
             {
                 OrderIdentifier = command.OrderIdentifier

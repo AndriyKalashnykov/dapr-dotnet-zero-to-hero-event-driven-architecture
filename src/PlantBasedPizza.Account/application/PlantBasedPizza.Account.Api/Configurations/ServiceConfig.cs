@@ -15,14 +15,14 @@ public static class ServiceConfigs
         builder.Services.AddSingleton(client);
         builder.Services.AddSingleton<IUserAccountRepository, UserAccountRepository>();
         builder.Services.AddSingleton<UserAccountService>();
-        
+
         BsonClassMap.RegisterClassMap<UserAccount>(map =>
         {
             map.AutoMap();
             map.SetIgnoreExtraElements(true);
             map.SetIgnoreExtraElementsIsInherited(true);
         });
-        
+
         logger.LogInformation("Added services");
 
         return services;

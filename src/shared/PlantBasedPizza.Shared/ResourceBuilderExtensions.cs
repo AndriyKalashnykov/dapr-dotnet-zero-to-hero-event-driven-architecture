@@ -8,9 +8,9 @@ public static class ResourceBuilderExtensions
     public static ResourceBuilder AddDefaultOtelTags(this ResourceBuilder resourceBuilder, IConfiguration configuration)
     {
         var defaultApplicationConfig = configuration.GetSection("ApplicationConfig").Get<DefaultApplicationConfig>();
-        
+
         if (defaultApplicationConfig == null) return resourceBuilder;
-        
+
         resourceBuilder.AddAttributes(new List<KeyValuePair<string, object>>()
         {
             new("service.name", defaultApplicationConfig.ApplicationName),
@@ -23,7 +23,7 @@ public static class ResourceBuilderExtensions
             new("service.build.id", defaultApplicationConfig.Version),
             new("service.build.deployment.at", defaultApplicationConfig.DeployedAt)
         });
-        
+
         return resourceBuilder;
     }
 }

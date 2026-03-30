@@ -10,14 +10,14 @@ namespace PlantBasedPizza.Recipes.IntegrationTests.Hooks;
 public static class Hook
 {
     private const string SERVICE_NAME = "PlantBasedPizzaApiIntegrationTests";
-    
+
     public static ActivitySource Source { get; private set; }
     public static TracerProvider TracerProvider { get; private set; }
-    
+
     public static Activity CurrentActivity { get; private set; }
-    
+
     public static Activity RootActivity { get; private set; }
-    
+
     [BeforeTestRun]
     public static void BeforeTestRun()
     {
@@ -44,7 +44,7 @@ public static class Hook
     public static void BeforeScenario(ScenarioContext scenarioContext)
     {
         CurrentActivity = Source.StartActivity(scenarioContext.ScenarioInfo.Title, ActivityKind.Client, RootActivity.Context);
-        
+
         scenarioContext.Add("Activity", CurrentActivity);
     }
 

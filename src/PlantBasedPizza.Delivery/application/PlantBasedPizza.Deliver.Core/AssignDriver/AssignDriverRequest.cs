@@ -6,7 +6,7 @@ namespace PlantBasedPizza.Deliver.Core.AssignDriver
     {
         [JsonPropertyName("OrderIdentifier")]
         public string OrderIdentifier { get; init; } = "";
-        
+
         [JsonPropertyName("DriverName")]
         public string DriverName { get; init; } = "";
     }

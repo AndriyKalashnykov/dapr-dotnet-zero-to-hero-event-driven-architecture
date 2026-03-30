@@ -9,7 +9,7 @@ public class CollectOrderCommandHandler(IOrderRepository orderRepository)
         try
         {
             var existingOrder = await orderRepository.Retrieve(command.OrderIdentifier);
-            
+
             if (existingOrder.OrderType == OrderType.Delivery || !existingOrder.AwaitingCollection)
             {
                 return new OrderDto(existingOrder);

@@ -25,7 +25,7 @@ public class RefundPaymentCommandHandler(ILogger<RefundPaymentCommandHandler> lo
             var randomSecondDelay = RandomNumberGenerator.GetInt32(5, 20);
 
             await Task.Delay(TimeSpan.FromSeconds(randomSecondDelay));
-            
+
             await cache.SetStringAsync($"Refunded_{command.OrderIdentifier}", "processed");
 
             return true;

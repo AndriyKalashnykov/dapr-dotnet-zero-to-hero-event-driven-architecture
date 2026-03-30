@@ -12,16 +12,16 @@ public class OrderEventPublisher(DaprClient daprClient) : IOrderEventPublisher
     private const string SOURCE = "orders";
     private const string PUB_SUB_NAME = "public";
     private const string DATE_FORMAT = "yyyy-MM-ddTHH:mm:ssZ";
-    
+
     [Channel("order.orderSubmitted.v1")]
     [SubscribeOperation(typeof(OrderSubmittedEventV1), OperationId = nameof(OrderSubmittedEventV1), Summary = "Published when an order is submitted.")]
     public async Task PublishOrderSubmittedEventV1(OrderSubmittedEventV1 evt)
     {
         var eventType = $"{evt.EventName}.{evt.EventVersion}";
         var eventId = Guid.NewGuid().ToString();
-        
+
         evt.AddToTelemetry(eventId);
-        
+
         var eventMetadata = new Dictionary<string, string>(3)
         {
             { EventConstants.EVENT_SOURCE_HEADER_KEY, SOURCE },
@@ -39,9 +39,9 @@ public class OrderEventPublisher(DaprClient daprClient) : IOrderEventPublisher
     {
         var eventType = $"{evt.EventName}.{evt.EventVersion}";
         var eventId = Guid.NewGuid().ToString();
-        
+
         evt.AddToTelemetry(eventId);
-        
+
         var eventMetadata = new Dictionary<string, string>(3)
         {
             { EventConstants.EVENT_SOURCE_HEADER_KEY, SOURCE },
@@ -58,9 +58,9 @@ public class OrderEventPublisher(DaprClient daprClient) : IOrderEventPublisher
     {
         var eventType = $"{evt.EventName}.{evt.EventVersion}";
         var eventId = Guid.NewGuid().ToString();
-        
+
         evt.AddToTelemetry(eventId);
-        
+
         var eventMetadata = new Dictionary<string, string>(3)
         {
             { EventConstants.EVENT_SOURCE_HEADER_KEY, SOURCE },
@@ -79,9 +79,9 @@ public class OrderEventPublisher(DaprClient daprClient) : IOrderEventPublisher
     {
         var eventType = $"{evt.EventName}.{evt.EventVersion}";
         var eventId = Guid.NewGuid().ToString();
-        
+
         evt.AddToTelemetry(eventId);
-        
+
         var eventMetadata = new Dictionary<string, string>(3)
         {
             { EventConstants.EVENT_SOURCE_HEADER_KEY, SOURCE },
@@ -98,9 +98,9 @@ public class OrderEventPublisher(DaprClient daprClient) : IOrderEventPublisher
     {
         var eventType = $"{evt.EventName}.{evt.EventVersion}";
         var eventId = Guid.NewGuid().ToString();
-        
+
         evt.AddToTelemetry(eventId);
-        
+
         var eventMetadata = new Dictionary<string, string>(3)
         {
             { EventConstants.EVENT_SOURCE_HEADER_KEY, SOURCE },
@@ -117,9 +117,9 @@ public class OrderEventPublisher(DaprClient daprClient) : IOrderEventPublisher
     {
         var eventType = $"{evt.EventName}.{evt.EventVersion}";
         var eventId = Guid.NewGuid().ToString();
-        
+
         evt.AddToTelemetry(eventId);
-        
+
         var eventMetadata = new Dictionary<string, string>(3)
         {
             { EventConstants.EVENT_SOURCE_HEADER_KEY, SOURCE },
@@ -136,9 +136,9 @@ public class OrderEventPublisher(DaprClient daprClient) : IOrderEventPublisher
     {
         var eventType = $"{evt.EventName}.{evt.EventVersion}";
         var eventId = Guid.NewGuid().ToString();
-        
+
         evt.AddToTelemetry(eventId);
-        
+
         var eventMetadata = new Dictionary<string, string>(3)
         {
             { EventConstants.EVENT_SOURCE_HEADER_KEY, SOURCE },

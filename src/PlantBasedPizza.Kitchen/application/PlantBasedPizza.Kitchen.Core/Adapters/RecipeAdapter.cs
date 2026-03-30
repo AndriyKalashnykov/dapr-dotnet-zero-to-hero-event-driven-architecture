@@ -8,15 +8,15 @@ namespace PlantBasedPizza.Kitchen.Core.Adapters
         private RecipeAdapter()
         {
         }
-        
+
         public RecipeAdapter(string recipeIdentifier)
         {
             RecipeIdentifier = recipeIdentifier;
         }
-        
+
         [JsonPropertyName("recipeIdentifier")]
         public string RecipeIdentifier { get; set; } = "";
-        
+
         [JsonPropertyName("ingredients")]
         public List<RecipeItemAdapter> Ingredients { get; set; }
     }
@@ -25,7 +25,7 @@ namespace PlantBasedPizza.Kitchen.Core.Adapters
     {
         [JsonPropertyName("name")]
         public string Name { get; set; }
-        
+
         [JsonPropertyName("quantity")]
         public decimal Quantity { get; set; }
     }

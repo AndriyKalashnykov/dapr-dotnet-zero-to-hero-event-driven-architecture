@@ -9,7 +9,7 @@ public class LoyaltyPointsDto
         TotalPoints = totalPoints;
         History = new List<LoyaltyPointHistoryDto>();
     }
-    
+
     public LoyaltyPointsDto(CustomerLoyaltyPoints points)
     {
         TotalPoints = points.TotalPoints;
@@ -21,10 +21,10 @@ public class LoyaltyPointsDto
             OrderValue = history.OrderValue
         }).ToList();
     }
-    
+
     [JsonPropertyName("totalPoints")]
     public decimal TotalPoints { get; set; }
-    
+
     [JsonPropertyName("history")]
     public List<LoyaltyPointHistoryDto> History { get; set; }
 }

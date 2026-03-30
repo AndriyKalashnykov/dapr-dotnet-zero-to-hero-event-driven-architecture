@@ -17,13 +17,13 @@ namespace PlantBasedPizza.OrderManager.Core.OrderPreparing
             _logger = logger;
             _userNotificationService = userNotificationService;
         }
-        
+
         [Channel("kitchen.orderPreparing.v1")]
         [PublishOperation(typeof(OrderPreparingEventV1), OperationId = nameof(OrderPreparingEventV1))]
         public async Task Handle(OrderPreparingEventV1 evt)
         {
             _logger.LogInformation($"[ORDER-MANAGER] Handling order preparing event");
-            
+
             var order = await _orderRepository.Retrieve(evt.OrderIdentifier);
 
             order.AddHistory("Order prep started");

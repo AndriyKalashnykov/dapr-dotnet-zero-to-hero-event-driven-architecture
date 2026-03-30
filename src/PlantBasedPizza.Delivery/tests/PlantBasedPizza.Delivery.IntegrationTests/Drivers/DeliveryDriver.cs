@@ -21,11 +21,11 @@ namespace PlantBasedPizza.Delivery.IntegrationTests.Drivers
             _userHttpClient = new HttpClient();
             _userHttpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", TestTokenGenerator.GenerateTestTokenForRole("user"));
-            
+
             _staffHttpClient = new HttpClient();
             _staffHttpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", TestTokenGenerator.GenerateTestTokenForRole("staff"));
-            
+
             _driverHttpClient = new HttpClient();
             _driverHttpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", TestTokenGenerator.GenerateTestTokenForRole("driver"));
@@ -71,7 +71,7 @@ namespace PlantBasedPizza.Delivery.IntegrationTests.Drivers
         public async Task AssignDriver(string orderIdentifier, string driverName)
         {
             var url = $"{BaseUrl}/delivery/assign";
-            
+
             Console.WriteLine(url);
 
             var content = JsonSerializer.Serialize(new AssignDriverRequest()
@@ -91,7 +91,7 @@ namespace PlantBasedPizza.Delivery.IntegrationTests.Drivers
         public async Task DeliverOrder(string orderIdentifier)
         {
             var url = $"{BaseUrl}/delivery/delivered";
-            
+
             Console.WriteLine(url);
 
             var content = JsonSerializer.Serialize(new MarkOrderDeliveredRequest()

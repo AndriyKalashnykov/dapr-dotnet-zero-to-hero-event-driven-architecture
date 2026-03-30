@@ -10,16 +10,16 @@ public static class Setup
 {
     public static WebApplication AddLoyaltyPointsEventHandler(this WebApplication app)
     {
-        
+
         app.MapPost("/order-completed-event",
             [Topic("public", "order.orderCompleted.v1")]
-            async (
+        async (
                 [FromServices] AddLoyaltyPointsCommandHandler handler,
                 HttpContext context,
                 OrderCompletedEvent evt) =>
             {
                 var eventId = context.ExtractEventId();
-                
+
                 await handler.Handle(new AddLoyaltyPointsCommand
                 {
                     CustomerIdentifier = evt.CustomerIdentifier,

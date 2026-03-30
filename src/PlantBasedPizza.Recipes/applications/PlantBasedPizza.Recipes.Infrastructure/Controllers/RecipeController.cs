@@ -13,7 +13,7 @@ namespace PlantBasedPizza.Recipes.Infrastructure.Controllers
         private readonly IRecipeRepository _recipeRepository;
         private readonly DaprClient _daprClient;
 
-        public RecipeController(IRecipeRepository recipeRepository,  DaprClient daprClient)
+        public RecipeController(IRecipeRepository recipeRepository, DaprClient daprClient)
         {
             _recipeRepository = recipeRepository;
             _daprClient = daprClient;
@@ -39,7 +39,7 @@ namespace PlantBasedPizza.Recipes.Infrastructure.Controllers
         {
             return await _recipeRepository.Retrieve(recipeIdentifier);
         }
-        
+
         /// <summary>
         /// Create a new recipe.
         /// </summary>

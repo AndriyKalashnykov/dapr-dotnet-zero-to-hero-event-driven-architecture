@@ -25,12 +25,12 @@ push:
 unit-test:
 	dotnet test tests/PlantBasedPizza.Kitchen.UnitTests
 
-integration-test: start-test-infra run-integration-tests destory-test-infra
+integration-test: start-test-infra run-integration-tests destroy-test-infra
 
 start-test-infra:
 	docker compose -f docker-compose.yml -f docker-compose-integration.yml up -d
 
-destory-test-infra:
+destroy-test-infra:
 	docker compose -f docker-compose-integration.yml down
 
 run-integration-tests:

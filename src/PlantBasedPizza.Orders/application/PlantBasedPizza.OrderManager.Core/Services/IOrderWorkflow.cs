@@ -5,7 +5,7 @@ public interface IOrderWorkflow
     Task WaitForPotentialCancellation();
 
     Task SubmitOrder();
-    
+
     Task CancelOrder();
 
     Task TakePayment();

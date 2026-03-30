@@ -35,7 +35,7 @@ namespace PlantBasedPizza.Delivery.IntegrationTests.Steps
 
             var orderId = Guid.NewGuid().ToString();
             _scenarioContext.Add("orderId", orderId);
-            
+
             var eventId = Guid.NewGuid().ToString();
 
             await _driver.ANewOrderIsReadyForDelivery(orderId, eventId);
@@ -47,11 +47,11 @@ namespace PlantBasedPizza.Delivery.IntegrationTests.Steps
         {
             Activity.Current = _scenarioContext.Get<Activity>("Activity");
             var orderId = _scenarioContext.Get<string>("orderId");
-            
+
             var ordersAwaitingDriver = await _driver.GetAwaitingDriver();
 
             ordersAwaitingDriver.Count(p => p.OrderIdentifier == orderId).Should().Be(1);
-            
+
         }
 
         [Then(@"it should be awaiting delivery collection")]
@@ -59,7 +59,7 @@ namespace PlantBasedPizza.Delivery.IntegrationTests.Steps
         {
             Activity.Current = _scenarioContext.Get<Activity>("Activity");
             var orderId = _scenarioContext.Get<string>("orderId");
-            
+
             var ordersAwaitingDriver = await _driver.GetAwaitingDriver();
 
             ordersAwaitingDriver.Exists(p => p.OrderIdentifier == orderId).Should().BeTrue();
@@ -69,9 +69,9 @@ namespace PlantBasedPizza.Delivery.IntegrationTests.Steps
         public async Task WhenOrderDeliverIsAssignedToADriverNamedJames(string p0)
         {
             Activity.Current = _scenarioContext.Get<Activity>("Activity");
-            
+
             var orderId = _scenarioContext.Get<string>("orderId");
-            
+
             await _driver.AssignDriver(orderId, p0);
         }
 
@@ -79,9 +79,9 @@ namespace PlantBasedPizza.Delivery.IntegrationTests.Steps
         public async Task ThenOrderDeliverShouldAppearInAListOfJamesDeliveries(string p0)
         {
             Activity.Current = _scenarioContext.Get<Activity>("Activity");
-            
+
             var orderId = _scenarioContext.Get<string>("orderId");
-            
+
             var ordersForDriver = await _driver.GetAssignedDeliveriesForDriver(p0);
 
             ordersForDriver.Exists(p => p.OrderIdentifier == orderId).Should().BeTrue();
@@ -91,9 +91,9 @@ namespace PlantBasedPizza.Delivery.IntegrationTests.Steps
         public async Task WhenOrderDeliverIsDelivered()
         {
             Activity.Current = _scenarioContext.Get<Activity>("Activity");
-            
+
             var orderId = _scenarioContext.Get<string>("orderId");
-            
+
             await _driver.DeliverOrder(orderId);
         }
 
@@ -102,7 +102,7 @@ namespace PlantBasedPizza.Delivery.IntegrationTests.Steps
         {
             Activity.Current = _scenarioContext.Get<Activity>("Activity");
             var orderId = _scenarioContext.Get<string>("orderId");
-            
+
             var ordersForDriver = await _driver.GetAssignedDeliveriesForDriver(p0);
 
             ordersForDriver.Exists(p => p.OrderIdentifier == orderId).Should().BeFalse();

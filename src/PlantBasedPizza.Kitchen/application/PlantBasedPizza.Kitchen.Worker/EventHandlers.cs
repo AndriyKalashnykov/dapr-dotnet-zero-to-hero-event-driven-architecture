@@ -36,7 +36,7 @@ public static class EventHandlers
         catch (Exception ex)
         {
             Activity.Current?.AddException(ex);
-            
+
             return Results.InternalServerError();
         }
     }

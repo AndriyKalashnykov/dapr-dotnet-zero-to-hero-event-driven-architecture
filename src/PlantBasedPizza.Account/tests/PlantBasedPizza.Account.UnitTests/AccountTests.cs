@@ -10,7 +10,7 @@ public class AccountTests
         var testEmailAddress = "test@test.com";
         var testPassword = "Password!234";
         var testAccountId = "1234";
-        
+
         var userRepo = A.Fake<IUserAccountRepository>();
         var jwtOptions = Options.Create(new JwtConfiguration()
         {
@@ -22,7 +22,9 @@ public class AccountTests
         A.CallTo(() => userRepo.CreateAccount(A<UserAccount>.Ignored)).Returns(
             Task.FromResult(new UserAccount()
             {
-                AccountId = testAccountId, AccountType = AccountType.User, EmailAddress = testEmailAddress,
+                AccountId = testAccountId,
+                AccountType = AccountType.User,
+                EmailAddress = testEmailAddress,
                 Password = testPassword
             }));
 
@@ -33,14 +35,14 @@ public class AccountTests
 
         result.AccountId.Should().NotBeEmpty();
     }
-    
+
     [Fact]
     public async Task CanRegisterNewDriver_ShouldAllowRegisterWithValidDetails()
     {
         var testEmailAddress = "test@test.com";
         var testPassword = "Password!234";
         var testAccountId = "1234";
-        
+
         var userRepo = A.Fake<IUserAccountRepository>();
         var jwtOptions = Options.Create(new JwtConfiguration()
         {
@@ -52,7 +54,9 @@ public class AccountTests
         A.CallTo(() => userRepo.CreateAccount(A<UserAccount>.Ignored)).Returns(
             Task.FromResult(new UserAccount()
             {
-                AccountId = testAccountId, AccountType = AccountType.User, EmailAddress = testEmailAddress,
+                AccountId = testAccountId,
+                AccountType = AccountType.User,
+                EmailAddress = testEmailAddress,
                 Password = testPassword
             }));
 
@@ -63,14 +67,14 @@ public class AccountTests
 
         result.AccountId.Should().NotBeEmpty();
     }
-    
+
     [Fact]
     public async Task CanRegisterNewStaffAccount_ShouldAllowRegisterWithValidDetails()
     {
         var testEmailAddress = "test@plantbasedpizza.com";
         var testPassword = "Password!234";
         var testAccountId = "1234";
-        
+
         var userRepo = A.Fake<IUserAccountRepository>();
         var jwtOptions = Options.Create(new JwtConfiguration()
         {
@@ -82,7 +86,9 @@ public class AccountTests
         A.CallTo(() => userRepo.CreateAccount(A<UserAccount>.Ignored)).Returns(
             Task.FromResult(new UserAccount()
             {
-                AccountId = testAccountId, AccountType = AccountType.User, EmailAddress = testEmailAddress,
+                AccountId = testAccountId,
+                AccountType = AccountType.User,
+                EmailAddress = testEmailAddress,
                 Password = testPassword
             }));
 
@@ -93,14 +99,14 @@ public class AccountTests
 
         result.AccountId.Should().NotBeEmpty();
     }
-    
+
     [Fact]
     public async Task CanRegisterNewStaffAccountWithInvalidEmail_ShouldFailToCreate()
     {
         var testEmailAddress = "test@test.com";
         var testPassword = "Password!234";
         var testAccountId = "1234";
-        
+
         var userRepo = A.Fake<IUserAccountRepository>();
         var jwtOptions = Options.Create(new JwtConfiguration()
         {
@@ -112,7 +118,9 @@ public class AccountTests
         A.CallTo(() => userRepo.CreateAccount(A<UserAccount>.Ignored)).Returns(
             Task.FromResult(new UserAccount()
             {
-                AccountId = testAccountId, AccountType = AccountType.User, EmailAddress = testEmailAddress,
+                AccountId = testAccountId,
+                AccountType = AccountType.User,
+                EmailAddress = testEmailAddress,
                 Password = testPassword
             }));
 
@@ -120,17 +128,17 @@ public class AccountTests
 
         var exception = await Assert.ThrowsAsync<InvalidUserException>(async () => await userAccountService.Register(
             new RegisterUserCommand() { EmailAddress = testEmailAddress, Password = testPassword }, AccountType.Staff));
-        
+
         exception.Reason.Should().Be("Not a valid staff email");
     }
-    
+
     [Fact]
     public async Task CanRegisterAccountWithInvalidEmail_ShouldFailToCreate()
     {
         var testEmailAddress = "winefiwfnwe";
         var testPassword = "Password!234";
         var testAccountId = "1234";
-        
+
         var userRepo = A.Fake<IUserAccountRepository>();
         var jwtOptions = Options.Create(new JwtConfiguration()
         {
@@ -142,7 +150,9 @@ public class AccountTests
         A.CallTo(() => userRepo.CreateAccount(A<UserAccount>.Ignored)).Returns(
             Task.FromResult(new UserAccount()
             {
-                AccountId = testAccountId, AccountType = AccountType.User, EmailAddress = testEmailAddress,
+                AccountId = testAccountId,
+                AccountType = AccountType.User,
+                EmailAddress = testEmailAddress,
                 Password = testPassword
             }));
 
@@ -153,14 +163,14 @@ public class AccountTests
 
         exception.Reason.Should().Be("Invalid email address");
     }
-    
+
     [Fact]
     public async Task CanRegisterAccountWithInvalidPassword_ShouldFailToCreate()
     {
         var testEmailAddress = "test@test.com";
         var testPassword = "this does not meet password requirements";
         var testAccountId = "1234";
-        
+
         var userRepo = A.Fake<IUserAccountRepository>();
         var jwtOptions = Options.Create(new JwtConfiguration()
         {
@@ -172,7 +182,9 @@ public class AccountTests
         A.CallTo(() => userRepo.CreateAccount(A<UserAccount>.Ignored)).Returns(
             Task.FromResult(new UserAccount()
             {
-                AccountId = testAccountId, AccountType = AccountType.User, EmailAddress = testEmailAddress,
+                AccountId = testAccountId,
+                AccountType = AccountType.User,
+                EmailAddress = testEmailAddress,
                 Password = testPassword
             }));
 
@@ -183,14 +195,14 @@ public class AccountTests
 
         exception.Reason.Should().Be("Invalid password");
     }
-    
+
     [Fact]
     public async Task OnSuccessfulLogin_ShouldReturnValidJwt()
     {
         var testEmailAddress = "test@test.com";
         var testPassword = "this does not meet password requirements";
         var testAccountId = "1234";
-        
+
         var userRepo = A.Fake<IUserAccountRepository>();
         var jwtOptions = Options.Create(new JwtConfiguration()
         {
@@ -202,7 +214,9 @@ public class AccountTests
         A.CallTo(() => userRepo.ValidateCredentials(A<string>.Ignored, A<string>.Ignored)).Returns(
             Task.FromResult(new UserAccount()
             {
-                AccountId = testAccountId, AccountType = AccountType.User, EmailAddress = testEmailAddress,
+                AccountId = testAccountId,
+                AccountType = AccountType.User,
+                EmailAddress = testEmailAddress,
                 Password = testPassword
             }));
 
@@ -216,14 +230,14 @@ public class AccountTests
 
         loginResult.AuthToken.Should().NotBeEmpty();
     }
-    
+
     [Fact]
     public async Task OnFailedLogin_ShouldNotReturnJwt()
     {
         var testEmailAddress = "test@test.com";
         var testPassword = "this does not meet password requirements";
         var testAccountId = "1234";
-        
+
         var userRepo = A.Fake<IUserAccountRepository>();
         var jwtOptions = Options.Create(new JwtConfiguration()
         {

@@ -6,6 +6,6 @@ public class InvalidUserException : Exception
     {
         Reason = reason;
     }
-    
+
     public string Reason { get; set; }
 }

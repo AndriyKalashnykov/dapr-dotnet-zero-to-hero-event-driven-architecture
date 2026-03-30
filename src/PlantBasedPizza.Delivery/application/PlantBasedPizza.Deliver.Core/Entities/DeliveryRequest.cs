@@ -8,21 +8,21 @@ namespace PlantBasedPizza.Deliver.Core.Entities
         private DeliveryRequest()
         {
         }
-        
+
         public DeliveryRequest(string orderIdentifier, Address deliveryAddress)
         {
             OrderIdentifier = orderIdentifier;
             DeliveryAddress = deliveryAddress;
         }
-        
+
         [JsonPropertyName("orderIdentifier")]
         public string OrderIdentifier { get; private set; } = "";
-        
+
         [JsonPropertyName("driver")]
         public string Driver { get; private set; } = "";
-        
+
         public bool AwaitingCollection => !DriverCollectedOn.HasValue;
-        
+
         [JsonPropertyName("deliveryAddress")]
         public Address DeliveryAddress { get; private set; }
 

@@ -29,7 +29,7 @@ public static class Setup
         });
 
         services.AddSharedInfrastructure(configuration, serviceName);
-        
+
         return services;
     }
 }

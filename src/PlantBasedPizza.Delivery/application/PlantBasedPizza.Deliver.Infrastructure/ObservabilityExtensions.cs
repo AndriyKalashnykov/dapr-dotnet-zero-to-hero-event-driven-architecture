@@ -16,7 +16,7 @@ public static class ObservabilityExtensions
         Activity.Current.SetTag("orderIdentifier", request.OrderIdentifier);
         Activity.Current.SetTag("driverName", request.DriverName);
     }
-    
+
     public static void AddToTelemetry(this MarkOrderDeliveredRequest request)
     {
         if (Activity.Current is null)

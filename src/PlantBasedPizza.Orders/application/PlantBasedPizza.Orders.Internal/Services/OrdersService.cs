@@ -25,7 +25,7 @@ public class OrdersService : Orders.OrdersBase
         {
             Activity.Current?.AddTag("cached", "true");
             var cachedOrder = JsonSerializer.Deserialize<OrderDto>(cachedOrderData);
-            
+
             var reply = new GetOrderDetailsReply()
             {
                 OrderIdentifier = cachedOrder.OrderIdentifier,
@@ -43,11 +43,11 @@ public class OrdersService : Orders.OrdersBase
 
             return reply;
         }
-        
+
         Activity.Current?.AddTag("cached", "false");
-        
+
         var order = await _orderRepository.Retrieve(request.OrderIdentifier).ConfigureAwait(false);
-            
+
         var orderReply = new GetOrderDetailsReply()
         {
             OrderIdentifier = order.OrderIdentifier,

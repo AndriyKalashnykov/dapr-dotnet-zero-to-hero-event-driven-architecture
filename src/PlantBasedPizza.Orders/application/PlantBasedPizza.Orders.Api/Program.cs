@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using PlantBasedPizza.OrderManager.Core.DriverCollectedOrder;
 using PlantBasedPizza.OrderManager.Core.DriverDeliveredOrder;
@@ -42,7 +43,7 @@ var applicationName = "OrdersApi";
 
 builder.Services.AddOrderManagerInfrastructure(builder.Configuration)
     .AddSharedInfrastructure(builder.Configuration, applicationName)
-    .AddAsyncApiDocs(builder.Configuration, 
+    .AddAsyncApiDocs(builder.Configuration,
         [typeof(OrderEventPublisher),
             typeof(DriverDeliveredOrderEventHandler),
             typeof(DriverCollectedOrderEventHandler),
@@ -59,7 +60,7 @@ builder.Services.AddHttpClient()
     .AddCheck<LoyaltyServiceHealthChecks>("LoyaltyService")
     .AddCheck<RecipeServiceHealthCheck>("RecipeService")
     .AddCheck<DeadLetterQueueChecks>("DeadLetterQueue")
-    .AddMongoDb(builder.Configuration["DatabaseConnection"]);
+    .AddMongoDb(sp => sp.GetRequiredService<MongoClient>());
 
 var app = builder.Build();
 

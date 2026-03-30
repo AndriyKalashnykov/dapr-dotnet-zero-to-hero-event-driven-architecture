@@ -8,7 +8,7 @@ namespace PlantBasedPizza.UnitTest
     public class KitchenTests
     {
         internal const string OrderIdentifier = "ORDER123";
-        
+
         [Fact]
         public void CanCreateNewKitchenRequest_ShouldCreate()
         {
@@ -23,7 +23,7 @@ namespace PlantBasedPizza.UnitTest
             request.QualityCheckCompleteOn.Should().BeNull();
             request.KitchenRequestId.Should().NotBeNull();
         }
-        
+
         [Fact]
         public void CanCreateWithNullOrderIdentifier_ShouldError()
         {
@@ -40,7 +40,7 @@ namespace PlantBasedPizza.UnitTest
         public void CanCreateAndMarkPreparing_ShouldSetPrepCompleted()
         {
             var request = new KitchenRequestBuilder().AddRecipe("Pizza").Build();
-            
+
             request.Preparing();
             request.PrepComplete();
 
@@ -51,7 +51,7 @@ namespace PlantBasedPizza.UnitTest
         public void CanCreateAndMarkBaked_ShouldSetBakeComplete()
         {
             var request = new KitchenRequestBuilder().AddRecipe("Pizza").Build();
-            
+
             request.Preparing();
             request.PrepComplete();
             request.BakeComplete();
@@ -63,7 +63,7 @@ namespace PlantBasedPizza.UnitTest
         public async Task CanCreateAndMarkQualityChecked_ShouldSetQualityCheckedOn()
         {
             var request = new KitchenRequestBuilder().AddRecipe("Pizza").Build();
-            
+
             request.Preparing();
             request.PrepComplete();
             request.BakeComplete();

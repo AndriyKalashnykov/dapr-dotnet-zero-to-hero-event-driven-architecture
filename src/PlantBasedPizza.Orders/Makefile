@@ -32,7 +32,7 @@ unit-test:
 integration-test-infra:
 	docker compose -f docker-compose.yml -f docker-compose-integration.yml up -d
 
-integration-test: start-integration-test
+integration-test: integration-test-infra
 	sleep 5
 	dotnet test tests/PlantBasedPizza.Orders.IntegrationTest
 	docker compose -f docker-compose.yml -f docker-compose-integration.yml down

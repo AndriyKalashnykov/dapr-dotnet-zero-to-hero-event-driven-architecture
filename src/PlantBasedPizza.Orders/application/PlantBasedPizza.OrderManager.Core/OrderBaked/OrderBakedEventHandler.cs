@@ -14,7 +14,7 @@ namespace PlantBasedPizza.OrderManager.Core.OrderBaked
             _orderRepository = orderRepository;
             _userNotificationService = userNotificationService;
         }
-        
+
         [Channel("kitchen.orderBaked.v1")]
         [PublishOperation(typeof(OrderBakedEventV1), OperationId = nameof(OrderBakedEventV1))]
         public async Task Handle(OrderBakedEventV1 evt)

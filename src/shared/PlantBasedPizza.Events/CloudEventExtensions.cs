@@ -72,7 +72,7 @@ public static class CloudEventExtensions
             Activity.Current?.AddTag("messaging.message.age",
                 messageAge.TotalMilliseconds.ToString(CultureInfo.InvariantCulture));
         }
-        
+
         var traceParent = extractValueFromHeader(httpContext, "traceparent") ?? "";
 
         Activity.Current?.AddTag("messaging.operation.type", "process");

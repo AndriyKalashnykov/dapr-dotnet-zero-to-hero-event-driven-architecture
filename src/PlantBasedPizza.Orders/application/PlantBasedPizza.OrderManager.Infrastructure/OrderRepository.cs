@@ -23,7 +23,7 @@ public class OrderRepository : IOrderRepository
     public async Task Add(Order order)
     {
         await _orders.InsertOneAsync(order).ConfigureAwait(false);
-        
+
         await _cache.SetStringAsync(order.OrderIdentifier, JsonSerializer.Serialize(new OrderDto(order)));
 
         foreach (var evt in order.Events)
@@ -72,9 +72,9 @@ public class OrderRepository : IOrderRepository
     {
         // TODO: This should be wrapped in a transaction
         var queryBuilder = Builders<Order>.Filter.Eq(ord => ord.OrderIdentifier, order.OrderIdentifier);
-            
+
         await _orders.ReplaceOneAsync(queryBuilder, order);
-        
+
         await _cache.SetStringAsync(order.OrderIdentifier, JsonSerializer.Serialize(new OrderDto(order)));
 
         foreach (var evt in order.Events)

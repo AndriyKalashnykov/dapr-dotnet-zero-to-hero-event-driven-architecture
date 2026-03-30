@@ -29,26 +29,26 @@ public static class Endpoints
     public static async Task<IEnumerable<DeliveryRequestDto>> GetOrdersForDriver(
         [FromServices] IDeliveryRequestRepository repository, string driverName)
     {
-        var request =  await repository.GetOrdersWithDriver(driverName);
-        
+        var request = await repository.GetOrdersWithDriver(driverName);
+
         return request.Select(r => new DeliveryRequestDto(r));
     }
 
     public static async Task<IResult> AssignToDriver([FromServices] AssignDriverRequestHandler handler, [FromBody] AssignDriverRequest request, CancellationToken token)
     {
         request.AddToTelemetry();
-        
+
         var result = await handler.Handle(request);
-        
+
         return result is null ? TypedResults.NotFound() : TypedResults.Ok(result);
     }
-    
+
     public static async Task<IResult> MarkOrderDelivered([FromServices] MarkOrderDeliveredRequestHandler handler, [FromBody] MarkOrderDeliveredRequest request)
     {
         request.AddToTelemetry();
-        
+
         var result = await handler.Handle(request);
-        
+
         return result is null ? TypedResults.NotFound() : TypedResults.Ok(result);
     }
 }

@@ -6,7 +6,7 @@ namespace PlantBasedPizza.Delivery.IntegrationTests.ViewModels
     {
         [JsonPropertyName("orderIdentifier")]
         public string OrderIdentifier { get; set; }
-        
+
         [JsonPropertyName("driver")]
         public string Driver { get; set; }
 

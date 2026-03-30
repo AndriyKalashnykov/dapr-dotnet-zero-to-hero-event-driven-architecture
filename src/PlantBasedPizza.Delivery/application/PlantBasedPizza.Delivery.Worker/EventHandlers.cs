@@ -12,22 +12,22 @@ public static class EventHandlers
 {
     [Topic("public", "order.readyForDelivery.v1",
         DeadLetterTopic = "delivery.failedMessages")]
-    public static async Task<IResult> HandleOrderReadyForDeliveryEvent([FromServices]OrderReadyForDeliveryEventHandler handler,
+    public static async Task<IResult> HandleOrderReadyForDeliveryEvent([FromServices] OrderReadyForDeliveryEventHandler handler,
         [FromServices] Idempotency idempotency,
         HttpContext httpContext,
         OrderReadyForDeliveryEventV1 evt)
     {
         var eventId = httpContext.ExtractEventId();
-                
+
         if (await idempotency.HasEventBeenProcessedWithId(eventId))
         {
             return Results.Ok();
         }
-                
+
         await handler.Handle(evt);
-                
+
         await idempotency.ProcessedSuccessfully(eventId);
-                
+
         return Results.Ok();
     }
 

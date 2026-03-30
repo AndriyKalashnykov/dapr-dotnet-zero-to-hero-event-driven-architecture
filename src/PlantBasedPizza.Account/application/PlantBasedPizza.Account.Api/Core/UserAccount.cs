@@ -27,12 +27,12 @@ public class UserAccount
         {
             throw new InvalidUserException("Invalid email address");
         }
-        
+
         if (!IsValidPassword(password))
         {
             throw new InvalidUserException("Invalid password");
         }
-        
+
         return new UserAccount()
         {
             AccountId = Guid.NewGuid().ToString(),
@@ -41,21 +41,21 @@ public class UserAccount
             AccountType = accountType,
             DateCreated = DateTime.UtcNow,
             AccountTier = AccountTier.Std
-        };    
+        };
     }
-    
+
     public string AccountId { get; set; } = string.Empty;
-    
+
     public string EmailAddress { get; set; } = string.Empty;
-    
+
     public string Password { get; set; } = string.Empty;
 
     public int AccountAge => (DateTime.UtcNow - this.DateCreated).Days;
-    
+
     public DateTime DateCreated { get; set; }
-    
+
     public AccountTier AccountTier { get; set; }
-    
+
     public AccountType AccountType { get; set; }
 
     public string AsAuthenticatedRole()
@@ -74,7 +74,7 @@ public class UserAccount
 
         return "user";
     }
-    
+
     // Note: This hashing algorithm may not be suitable for production scenarios with real user data
     internal static string HashPassword(string password)
     {
@@ -97,7 +97,7 @@ public class UserAccount
         // Return the hashed string
         return builder.ToString();
     }
-    
+
     private static bool IsValidEmail(string email)
     {
         if (string.IsNullOrWhiteSpace(email))
@@ -111,7 +111,7 @@ public class UserAccount
 
             // Check if the email is valid
             return Regex.IsMatch(email,
-                @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`{}|~\w])*)(?<=[0-9a-z])@))" + 
+                @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`{}|~\w])*)(?<=[0-9a-z])@))" +
                 @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-0-9a-z]*[0-9a-z]*\.)+[a-z0-9][-a-z0-9]{0,22}[a-z0-9]))$",
                 RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
         }
@@ -120,7 +120,7 @@ public class UserAccount
             return false;
         }
     }
-    
+
     private static bool IsValidPassword(string password)
     {
         // Password requirements
@@ -130,13 +130,13 @@ public class UserAccount
         var hasSymbols = new Regex(@"[!@#$%^&*()_+=\[{\]};:<>|./?,-]");
 
         // Validate the password
-        return hasNumber.IsMatch(password) 
-               && hasUpperChar.IsMatch(password) 
-               && hasLowerChar.IsMatch(password) 
+        return hasNumber.IsMatch(password)
+               && hasUpperChar.IsMatch(password)
+               && hasLowerChar.IsMatch(password)
                && hasSymbols.IsMatch(password)
                && password.Length > 8;
     }
-    
+
     private static string DomainMapper(Match match)
     {
         // Use IdnMapping class to convert Unicode domain names.

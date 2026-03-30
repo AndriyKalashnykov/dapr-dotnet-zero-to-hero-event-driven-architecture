@@ -15,17 +15,17 @@ namespace PlantBasedPizza.OrderManager.Core.OrderPrepComplete
             _orderRepository = orderRepository;
             _userNotificationService = userNotificationService;
         }
-        
+
         [Channel("kitchen.orderPrepComplete.v1")]
         [PublishOperation(typeof(OrderPrepCompleteEventV1), OperationId = nameof(OrderPrepCompleteEventV1))]
         public async Task Handle(OrderPrepCompleteEventV1 evt)
         {
             var order = await _orderRepository.Retrieve(evt.OrderIdentifier);
-            
+
             order.AddHistory("Order prep completed");
-            
+
             await _orderRepository.Update(order);
-            
+
             await _userNotificationService.NotifyOrderPrepComplete(order.CustomerIdentifier, order.OrderIdentifier);
         }
     }

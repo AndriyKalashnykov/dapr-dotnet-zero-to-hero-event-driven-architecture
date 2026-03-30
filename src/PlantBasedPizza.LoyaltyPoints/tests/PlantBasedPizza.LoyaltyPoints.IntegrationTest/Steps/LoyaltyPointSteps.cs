@@ -17,7 +17,7 @@ public sealed class LoyaltyPointSteps
 
         _driver = new LoyaltyPointsDriver();
     }
-    
+
     [Given(@"the loyalty points are added for order (.*) with a value of (.*)")]
     public async Task LoyaltyPointsAreAdded(string orderIdentifier, decimal orderValue)
     {
@@ -29,10 +29,10 @@ public sealed class LoyaltyPointSteps
     public async Task ThenTheTotalPointsShouldBe(int totalPoints)
     {
         Activity.Current = _scenarioContext.Get<Activity>("Activity");
-        
+
         var points = await _driver.GetLoyaltyPoints();
         var internalPoints = await _driver.GetLoyaltyPointsInternal();
 
-        points.TotalPoints.Should().BeGreaterOrEqualTo(totalPoints);
+        points.TotalPoints.Should().BeGreaterThanOrEqualTo(totalPoints);
     }
 }

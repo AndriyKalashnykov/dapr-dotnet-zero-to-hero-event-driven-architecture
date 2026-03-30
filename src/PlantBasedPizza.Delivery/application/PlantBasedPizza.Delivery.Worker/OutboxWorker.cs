@@ -13,7 +13,7 @@ public class OutboxWorker : BackgroundService
     private readonly ILogger<OutboxWorker> _logger;
     private readonly IDeliveryEventPublisher _eventPublisher;
     private readonly ActivitySource _source;
-    
+
     public OutboxWorker(MongoClient client, ILogger<OutboxWorker> logger, IDeliveryEventPublisher eventPublisher)
     {
         _logger = logger;
@@ -22,7 +22,7 @@ public class OutboxWorker : BackgroundService
         var database = client.GetDatabase("PlantBasedPizza");
         _outboxItems = database.GetCollection<OutboxItem>("DeliveryRequests_outboxitems");
     }
-    
+
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         while (!stoppingToken.IsCancellationRequested)
@@ -35,7 +35,7 @@ public class OutboxWorker : BackgroundService
                 {
                     using var processingActivity = StartFromOutboxItem(outboxItem);
                     processingActivity?.Start();
-                    
+
                     _logger.LogInformation("Processing outbox item: Type: {OutboxItemType}. Data: {OutboxItemData}", outboxItem.EventType, outboxItem.EventData);
 
                     switch (outboxItem.EventType)
@@ -63,7 +63,7 @@ public class OutboxWorker : BackgroundService
                     outboxItem.Failed = true;
                     outboxItem.FailureReason = $"An error occured while processing outbox item.: {e.Message} - {e.StackTrace}";
                 }
-                
+
                 var queryBuilder = Builders<OutboxItem>.Filter.Eq(item => item.ItemId, outboxItem.ItemId);
                 await _outboxItems.ReplaceOneAsync(queryBuilder, outboxItem, cancellationToken: stoppingToken);
             }
@@ -80,7 +80,7 @@ public class OutboxWorker : BackgroundService
             {
                 var context = ActivityContext.Parse(outboxItem.TraceId, null);
                 var messageProcessingActivity = _source.StartActivity("process", ActivityKind.Internal, context);
-                
+
                 return messageProcessingActivity;
             }
             catch (Exception ex)

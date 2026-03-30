@@ -12,7 +12,7 @@ public class MarkOrderDeliveredRequestHandler(IDeliveryRequestRepository deliver
         if (existingDeliveryRequest == null) return null;
 
         await existingDeliveryRequest.Deliver();
-            
+
         await deliveryRequests.UpdateDeliveryRequest(existingDeliveryRequest, [new DriverDeliveredOrderEventV1(existingDeliveryRequest)]);
 
         return new DeliveryRequestDto(existingDeliveryRequest);

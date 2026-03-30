@@ -33,17 +33,17 @@ public class LoyaltyPointService : ILoyaltyPointService
             if (cacheCheck != null)
             {
                 Activity.Current?.AddTag("loyalty.cacheHit", true);
-                
+
                 return decimal.Parse(cacheCheck);
             }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failure reading loyalty points from cache");
-            
+
             Activity.Current?.AddTag("cache.failure", true);
         }
-        
+
         Activity.Current?.AddTag("loyalty.cacheMiss", true);
 
         var loyaltyPoints = await _loyaltyClient.GetCustomerLoyaltyPointsAsync(

@@ -24,7 +24,7 @@ public class UserAccountService
         try
         {
             var account = await _userAccountRepository.ValidateCredentials(request.EmailAddress, request.Password);
-    
+
             var issuer = _configuration.Issuer;
             var audience = _configuration.Audience;
             var key = Encoding.ASCII.GetBytes
@@ -38,11 +38,11 @@ public class UserAccountService
                 new Claim("UserTier", account.AccountTier.ToString()),
                 new Claim("AccountAge", account.AccountAge.ToString(CultureInfo.InvariantCulture)),
             };
-            
+
             Activity.Current?.AddTag("user.type", account.AccountType.ToString());
             Activity.Current?.AddTag("user.tier", account.AccountTier.ToString());
             Activity.Current?.AddTag("user.account_age", account.AccountAge);
-        
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
@@ -55,7 +55,7 @@ public class UserAccountService
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
-        
+
             var stringToken = tokenHandler.WriteToken(token);
 
             return new LoginResponse()
@@ -77,7 +77,7 @@ public class UserAccountService
         try
         {
             UserAccount? userAccount = null;
-            
+
             switch (accountType)
             {
                 case AccountType.User:
@@ -91,13 +91,13 @@ public class UserAccountService
                     {
                         throw new InvalidUserException("Not a valid staff email");
                     }
-                    
+
                     userAccount = UserAccount.Create(request.EmailAddress, request.Password, AccountType.Staff);
                     break;
             }
 
             await _userAccountRepository.CreateAccount(userAccount);
-            
+
             return new RegisterResponse()
             {
                 AccountId = userAccount.AccountId

@@ -130,7 +130,7 @@ public class OrderSteps
     public async Task ThenOrderHistoryShouldNotExist(string p0)
     {
         await Task.Delay(TimeSpan.FromSeconds(2));
-        
+
         Activity.Current = _scenarioContext.Get<Activity>("Activity");
         var orderId = _scenarioContext.Get<string>("orderId");
 
@@ -183,7 +183,7 @@ public class OrderSteps
     {
         var eventId = Guid.NewGuid().ToString();
         _scenarioContext.Add("eventId", eventId);
-        
+
         await _eventDriver.SimulateInvalidPaymentSuccessEvent();
     }
 
@@ -192,7 +192,7 @@ public class OrderSteps
     {
         // Wait for retry policies
         await Task.Delay(TimeSpan.FromSeconds(3));
-        
+
         var eventId = _scenarioContext.Get<string>("eventId");
 
         await _eventDriver.VerifyEventReachesDeadLetterInbox(eventId);

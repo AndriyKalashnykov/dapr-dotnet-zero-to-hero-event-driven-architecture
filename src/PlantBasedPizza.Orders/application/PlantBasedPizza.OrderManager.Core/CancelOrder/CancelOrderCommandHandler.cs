@@ -23,7 +23,7 @@ public class CancelOrderCommandHandler(IOrderRepository orderRepository, IUserNo
         await orderRepository.Update(order);
 
         await userNotificationService.NotifyOrderCancelled(order.CustomerIdentifier, order.OrderIdentifier);
-        
+
         return new CancelOrderResult()
         {
             CancelSuccess = cancelResult

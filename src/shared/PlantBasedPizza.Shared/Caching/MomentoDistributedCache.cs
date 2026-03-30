@@ -48,7 +48,7 @@ public class MomentoDistributedCache : IDistributedCache
         }
 
         var cacheHitData = cachedData as CacheGetResponse.Hit;
-        
+
         if (cacheHitData is null)
         {
             return;

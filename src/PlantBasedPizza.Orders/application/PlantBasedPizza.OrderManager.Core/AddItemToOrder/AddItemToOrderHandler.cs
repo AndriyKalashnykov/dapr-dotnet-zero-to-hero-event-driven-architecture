@@ -13,19 +13,19 @@ public class AddItemToOrderHandler
         _orderRepository = orderRepository;
         _recipeService = recipeService;
     }
-    
+
     public async Task<Order?> Handle(AddItemToOrderCommand command)
     {
         try
         {
             var recipe = await _recipeService.GetRecipe(command.RecipeIdentifier);
-            
+
             var order = await _orderRepository.Retrieve(command.OrderIdentifier);
 
             if (order.CustomerIdentifier != command.CustomerIdentifier)
             {
                 throw new OrderNotFoundException(command.OrderIdentifier);
-            } 
+            }
 
             order.AddOrderItem(command.RecipeIdentifier, recipe.ItemName, command.Quantity, recipe.Price);
 

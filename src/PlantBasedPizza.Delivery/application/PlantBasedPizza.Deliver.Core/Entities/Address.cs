@@ -8,11 +8,11 @@ namespace PlantBasedPizza.Deliver.Core.Entities
         private Address()
         {
         }
-        
+
         public Address(string addressLine1, string postcode) : this(addressLine1, string.Empty, string.Empty, string.Empty, string.Empty, postcode)
         {
         }
-        
+
         public Address(string addressLine1, string addressLine2, string addressLine3, string addressLine4, string addressLine5, string postcode)
         {
             AddressLine1 = addressLine1;
@@ -25,22 +25,22 @@ namespace PlantBasedPizza.Deliver.Core.Entities
 
         [JsonPropertyName("addressLine1")]
         public string AddressLine1 { get; private set; } = "";
-        
+
         [JsonPropertyName("addressLine2")]
         public string AddressLine2 { get; private set; } = "";
-        
+
         [JsonPropertyName("addressLine3")]
         public string AddressLine3 { get; private set; } = "";
-        
+
         [JsonPropertyName("addressLine4")]
         public string AddressLine4 { get; private set; } = "";
-        
+
         [JsonPropertyName("addressLine5")]
         public string AddressLine5 { get; private set; } = "";
-        
+
         [JsonPropertyName("postcode")]
         public string Postcode { get; private set; } = "";
-        
-        
+
+
     }
 }

@@ -11,7 +11,7 @@ public class CachedIdempotencyService(IDistributedCache cache) : Idempotency
         {
             return false;
         }
-        
+
         var cachedEvent = await cache.GetStringAsync($"events_{eventId}");
 
         if (cachedEvent != null)
@@ -29,7 +29,7 @@ public class CachedIdempotencyService(IDistributedCache cache) : Idempotency
         {
             return;
         }
-        
+
         await cache.SetStringAsync($"events_{eventId}", "processed", new DistributedCacheEntryOptions()
         {
             AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(15),

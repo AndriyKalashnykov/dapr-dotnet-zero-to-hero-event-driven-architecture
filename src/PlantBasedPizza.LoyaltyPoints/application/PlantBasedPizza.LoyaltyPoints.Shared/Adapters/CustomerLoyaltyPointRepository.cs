@@ -20,13 +20,13 @@ public class CustomerLoyaltyPointRepository : ICustomerLoyaltyPointsRepository
         var database = client.GetDatabase("LoyaltyPoints");
         _loyaltyPoints = database.GetCollection<CustomerLoyaltyPoints>("loyalty");
     }
-    
+
     public async Task<CustomerLoyaltyPoints?> GetCurrentPointsFor(string customerIdentifier)
     {
         var queryBuilder = Builders<CustomerLoyaltyPoints>.Filter.Eq(p => p.CustomerId, customerIdentifier);
 
         var currentPoints = await _loyaltyPoints.Find(queryBuilder).FirstOrDefaultAsync();
-        
+
         if (currentPoints == null)
         {
             Activity.Current?.AddTag("loyalty.notFoundForCustomer", true);
@@ -50,12 +50,12 @@ public class CustomerLoyaltyPointRepository : ICustomerLoyaltyPointsRepository
             CustomerIdentifier = points.CustomerId,
             TotalLoyaltyPoints = points.TotalPoints
         };
-        
+
         var eventType = $"{evt.EventName}.{evt.EventVersion}";
         var eventId = Guid.NewGuid().ToString();
-        
+
         evt.AddToTelemetry(eventId);
-        
+
         var eventMetadata = new Dictionary<string, string>(3)
         {
             { EventConstants.EVENT_SOURCE_HEADER_KEY, SOURCE },
@@ -63,7 +63,7 @@ public class CustomerLoyaltyPointRepository : ICustomerLoyaltyPointsRepository
             { EventConstants.EVENT_ID_HEADER_KEY, eventId },
             { EventConstants.EVENT_TIME_HEADER_KEY, DateTime.UtcNow.ToString(DATE_FORMAT) },
         };
-        
+
         await _daprClient.PublishEventAsync(PUB_SUB_NAME, eventType, evt, eventMetadata);
     }
 }

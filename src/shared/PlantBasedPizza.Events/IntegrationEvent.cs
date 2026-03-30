@@ -9,10 +9,10 @@ public abstract class IntegrationEvent
 {
     [JsonIgnore]
     public abstract string EventName { get; }
-    
+
     [JsonIgnore]
     public abstract string EventVersion { get; }
-    
+
     [JsonIgnore]
     public abstract Uri Source { get; }
 
@@ -21,9 +21,9 @@ public abstract class IntegrationEvent
     public void AddToTelemetry(string eventId)
     {
         var eventString = AsString();
-        
+
         var eventBytes = Encoding.UTF8.GetBytes(eventString);
-        
+
         Activity.Current?.AddTag("messaging.message.id", eventId);
         Activity.Current?.AddTag("messaging.message.body.size", eventBytes.Length);
 
@@ -36,7 +36,7 @@ public abstract class IntegrationEvent
         {
             // Don't want a schema parsing failure to cause the service to fail
         }
-        
+
         Activity.Current?.AddTag("messaging.operation.name", "send");
         Activity.Current?.AddTag("messaging.operation.type", "send");
         Activity.Current?.AddTag("messaging.system", "dapr.pubsub");

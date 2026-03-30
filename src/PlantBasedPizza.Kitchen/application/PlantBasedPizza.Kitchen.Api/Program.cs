@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MongoDB.Driver;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
@@ -21,7 +22,7 @@ var applicationName = "KitchenApi";
 builder.Services.AddSharedInfrastructure(builder.Configuration, applicationName)
     .AddKitchenInfrastructure(builder.Configuration)
     .AddHealthChecks()
-    .AddMongoDb(builder.Configuration["DatabaseConnection"]);
+    .AddMongoDb(sp => sp.GetRequiredService<MongoClient>());
 
 builder.Services.AddAsyncApiDocs(builder.Configuration,
     [typeof(KitchenEventPublisher), typeof(OrderConfirmedEventHandler)], "KitchenService");

@@ -30,21 +30,21 @@ namespace PlantBasedPizza.Deliver.Infrastructure
                 map.SetIgnoreExtraElements(true);
                 map.SetIgnoreExtraElementsIsInherited(true);
             });
-            
+
             BsonClassMap.RegisterClassMap<DeliveryRequest>(map =>
             {
                 map.AutoMap();
                 map.SetIgnoreExtraElements(true);
                 map.SetIgnoreExtraElementsIsInherited(true);
             });
-            
+
             BsonClassMap.RegisterClassMap<Address>(map =>
             {
                 map.AutoMap();
                 map.SetIgnoreExtraElements(true);
                 map.SetIgnoreExtraElementsIsInherited(true);
             });
-            
+
             services.AddSingleton<IDeliveryRequestRepository, DeliveryRequestRepository>();
             services.AddSingleton<IDeliveryEventPublisher, DeliveryEventPublisher>();
             services.AddSingleton<IDeadLetterRepository, DeadLetterRepository>();
@@ -53,7 +53,7 @@ namespace PlantBasedPizza.Deliver.Infrastructure
             services.AddSingleton<MarkOrderDeliveredRequestHandler>();
             services.AddSingleton<GetDeliveryQueryHandler>();
             services.AddSingleton<GetAwaitingCollectionQueryHandler>();
-            
+
             return services;
         }
     }

@@ -12,7 +12,7 @@ public class RecipeRepository : IRecipeRepository
         var database = client.GetDatabase("PlantBasedPizza");
         _recipes = database.GetCollection<Recipe>("recipes");
     }
-    
+
     public async Task<Recipe?> Retrieve(string recipeIdentifier)
     {
         var queryBuilder = Builders<Recipe>.Filter.Eq(p => p.RecipeIdentifier, recipeIdentifier);
@@ -28,12 +28,12 @@ public class RecipeRepository : IRecipeRepository
 
         return recipes;
     }
-    
+
 
     public async Task<bool> Exists(Recipe recipe)
     {
         var existingRecipe = await this.Retrieve(recipe.RecipeIdentifier);
-        
+
         return existingRecipe is not null;
     }
 
@@ -44,7 +44,7 @@ public class RecipeRepository : IRecipeRepository
         {
             return;
         }
-        
+
         await _recipes.InsertOneAsync(recipe).ConfigureAwait(false);
     }
 
@@ -67,7 +67,7 @@ public class RecipeRepository : IRecipeRepository
         pepperoni.AddIngredient("Tomatoes", 1);
         pepperoni.AddIngredient("Cheese", 6);
         pepperoni.AddIngredient("Pepperoni", 20);
-        
+
         var veggieDeluxe = new Recipe(RecipeCategory.Pizza, "veggie-deluxe", "Veggie Deluxe", 7.99M);
         veggieDeluxe.AddIngredient("Tomatoes", 1);
         veggieDeluxe.AddIngredient("Cheese", 6);
@@ -75,13 +75,13 @@ public class RecipeRepository : IRecipeRepository
         veggieDeluxe.AddIngredient("Red Peppers", 6);
         veggieDeluxe.AddIngredient("Green Peppers", 6);
         veggieDeluxe.AddIngredient("Olives", 12);
-        
+
         var chickAint = new Recipe(RecipeCategory.Pizza, "chick-aint", "Chick-Aint", 10.99M);
         chickAint.AddIngredient("Tomatoes", 1);
         chickAint.AddIngredient("Cheese", 6);
         chickAint.AddIngredient("Chick-Aint", 12);
         veggieDeluxe.AddIngredient("Red Peppers", 6);
-        
+
         var spicy = new Recipe(RecipeCategory.Pizza, "spicy", "Spicy Veggie", 9.99M);
         marg.AddIngredient("Tomatoes", 1);
         marg.AddIngredient("Cheese", 6);
@@ -90,7 +90,7 @@ public class RecipeRepository : IRecipeRepository
 
         var fries = new Recipe(RecipeCategory.Sides, "fries", "Fries", 3.99M);
         fries.AddIngredient("Potatoes", 4);
-        
+
         await Add(marg);
         await Add(pepperoni);
         await Add(veggieDeluxe);

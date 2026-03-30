@@ -16,9 +16,9 @@ public class PaymentEventPublisher(DaprClient daprClient) : IPaymentEventPublish
     {
         var eventType = $"{evt.EventName}.{evt.EventVersion}";
         var eventId = Guid.NewGuid().ToString();
-        
+
         evt.AddToTelemetry(eventId);
-        
+
         var eventMetadata = new Dictionary<string, string>(3)
         {
             { EventConstants.EVENT_SOURCE_HEADER_KEY, SOURCE },
@@ -26,7 +26,7 @@ public class PaymentEventPublisher(DaprClient daprClient) : IPaymentEventPublish
             { EventConstants.EVENT_ID_HEADER_KEY, eventId },
             { EventConstants.EVENT_TIME_HEADER_KEY, DateTime.UtcNow.ToString(DATE_FORMAT) },
         };
-        
+
         await daprClient.PublishEventAsync("payments", eventType, evt, eventMetadata);
     }
 
@@ -36,9 +36,9 @@ public class PaymentEventPublisher(DaprClient daprClient) : IPaymentEventPublish
     {
         var eventType = $"{evt.EventName}.{evt.EventVersion}";
         var eventId = Guid.NewGuid().ToString();
-        
+
         evt.AddToTelemetry(eventId);
-        
+
         var eventMetadata = new Dictionary<string, string>(3)
         {
             { EventConstants.EVENT_SOURCE_HEADER_KEY, SOURCE },
@@ -46,7 +46,7 @@ public class PaymentEventPublisher(DaprClient daprClient) : IPaymentEventPublish
             { EventConstants.EVENT_ID_HEADER_KEY, eventId },
             { EventConstants.EVENT_TIME_HEADER_KEY, DateTime.UtcNow.ToString(DATE_FORMAT) },
         };
-        
+
         await daprClient.PublishEventAsync("payments", eventType, evt, eventMetadata);
     }
 }

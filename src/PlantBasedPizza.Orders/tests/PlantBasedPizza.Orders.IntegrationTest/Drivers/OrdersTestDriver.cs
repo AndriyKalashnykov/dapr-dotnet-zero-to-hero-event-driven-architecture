@@ -16,7 +16,7 @@ public class OrdersTestDriver
 {
     private readonly HttpClient _userHttpClient;
     private readonly HttpClient _staffHttpClient;
-    
+
     public OrdersTestDriver()
     {
         var userToken = TestTokenGenerator.GenerateTestTokenForRole("user");
@@ -28,7 +28,7 @@ public class OrdersTestDriver
         _staffHttpClient = new HttpClient();
         _staffHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", staffToken);
     }
-    
+
     public async Task<Order> AddNewDeliveryOrder(string customerIdentifier)
     {
         var response = await _userHttpClient.PostAsync(new Uri($"{TestConstants.DefaultTestUrl}/order/deliver"),

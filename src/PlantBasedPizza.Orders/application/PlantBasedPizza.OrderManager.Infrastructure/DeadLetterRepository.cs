@@ -27,7 +27,7 @@ public class DeadLetterRepository : IDeadLetterRepository
     public async Task<IEnumerable<DeadLetterMessage>> GetDeadLetterItems()
     {
         var items = await _deadLetters.FindAsync(x => true);
-        
+
         return await items.ToListAsync();
     }
 }

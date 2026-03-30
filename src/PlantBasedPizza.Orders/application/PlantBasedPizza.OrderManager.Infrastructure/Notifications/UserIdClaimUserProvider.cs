@@ -3,7 +3,7 @@ using PlantBasedPizza.Shared.Logging;
 
 namespace PlantBasedPizza.OrderManager.Infrastructure.Notifications;
 
-public class UserIdClaimUserProvider: IUserIdProvider
+public class UserIdClaimUserProvider : IUserIdProvider
 {
     public string? GetUserId(HubConnectionContext connection)
     {

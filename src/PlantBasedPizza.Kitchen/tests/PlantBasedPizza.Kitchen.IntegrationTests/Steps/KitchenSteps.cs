@@ -33,7 +33,7 @@ public class KitchenSteps
         var orderId = Guid.NewGuid().ToString();
 
         _scenarioContext.Add("orderId", orderId);
-        
+
         var eventId = Guid.NewGuid().ToString();
 
         await _kitchenDriver.NewOrderSubmitted(orderId, Guid.NewGuid().ToString());
@@ -44,7 +44,7 @@ public class KitchenSteps
     public async Task WhenOrderOrdIsProcessedByTheKitchen()
     {
         var orderId = _scenarioContext.Get<string>("orderId");
-        
+
         await _kitchenDriver.Preparing(orderId);
         await _kitchenDriver.PrepComplete(orderId);
         await _kitchenDriver.BakeComplete(orderId);
@@ -81,7 +81,7 @@ public class KitchenSteps
     {
         var orderId = _scenarioContext.Get<string>("orderId");
         Activity.Current = _scenarioContext.Get<Activity>("Activity");
-        
+
         await _kitchenDriver.QualityChecked(orderId);
     }
 
@@ -90,7 +90,7 @@ public class KitchenSteps
     {
         var orderId = _scenarioContext.Get<string>("orderId");
         Activity.Current = _scenarioContext.Get<Activity>("Activity");
-        
+
         var requests = await _kitchenDriver.GetPreparing();
         requests.Exists(p => p.OrderIdentifier == orderId).Should().BeTrue();
     }
@@ -100,7 +100,7 @@ public class KitchenSteps
     {
         var orderId = _scenarioContext.Get<string>("orderId");
         Activity.Current = _scenarioContext.Get<Activity>("Activity");
-        
+
         var requests = await _kitchenDriver.GetNew();
 
         requests.Exists(p => p.OrderIdentifier == orderId).Should().BeTrue();
@@ -111,7 +111,7 @@ public class KitchenSteps
     {
         var orderId = _scenarioContext.Get<string>("orderId");
         Activity.Current = _scenarioContext.Get<Activity>("Activity");
-        
+
         var requests = await _kitchenDriver.GetNew();
 
         requests.Count(p => p.OrderIdentifier == orderId).Should().Be(1);
@@ -122,7 +122,7 @@ public class KitchenSteps
     {
         var orderId = _scenarioContext.Get<string>("orderId");
         Activity.Current = _scenarioContext.Get<Activity>("Activity");
-        
+
         var requests = await _kitchenDriver.GetBaking();
 
         requests.Exists(p => p.OrderIdentifier == orderId).Should().BeTrue();
@@ -133,7 +133,7 @@ public class KitchenSteps
     {
         var orderId = _scenarioContext.Get<string>("orderId");
         Activity.Current = _scenarioContext.Get<Activity>("Activity");
-        
+
         var requests = await _kitchenDriver.GetQualityChecked();
         requests.Exists(p => p.OrderIdentifier == orderId).Should().BeTrue();
     }

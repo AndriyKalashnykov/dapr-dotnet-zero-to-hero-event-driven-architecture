@@ -9,7 +9,7 @@ namespace PlantBasedPizza.Shared.Guards
                 throw new ArgumentNullException(paramName);
             }
         }
-        
+
         public static void AgainstNull(object input, string paramName)
         {
             if (input == null)

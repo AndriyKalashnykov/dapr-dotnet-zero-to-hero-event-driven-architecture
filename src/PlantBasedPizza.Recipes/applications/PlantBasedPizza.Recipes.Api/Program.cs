@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MongoDB.Driver;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
@@ -42,7 +43,7 @@ builder.Services.AddSharedInfrastructure(builder.Configuration, applicationName)
 
 builder.Services.AddHttpClient();
 builder.Services.AddHealthChecks()
-    .AddMongoDb(builder.Configuration["DatabaseConnection"]);
+    .AddMongoDb(sp => sp.GetRequiredService<MongoClient>());
 builder.Services.AddControllers();
 
 var app = builder.Build();

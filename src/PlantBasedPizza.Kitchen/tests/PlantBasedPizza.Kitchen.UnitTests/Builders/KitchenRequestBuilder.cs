@@ -19,7 +19,7 @@ namespace PlantBasedPizza.UnitTest.Builders
             {
                 return this;
             }
-            
+
             _request.Recipes.Add(new RecipeAdapter(recipeName.ToUpper()));
 
             return this;

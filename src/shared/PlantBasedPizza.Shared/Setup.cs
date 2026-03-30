@@ -13,17 +13,17 @@ namespace PlantBasedPizza.Shared
     public static class Setup
     {
         private const string OTEL_DEFAULT_GRPC_ENDPOINT = "http://localhost:4317";
-        
+
         public static IServiceCollection AddSharedInfrastructure(this IServiceCollection services,
             IConfiguration configuration, string applicationName, string[]? additionalSources = null)
         {
             services.AddLogging();
-            
+
             var otel = services.AddOpenTelemetry();
             otel.ConfigureResource(resource => resource
                 .AddDefaultOtelTags(configuration)
                 .AddService(serviceName: applicationName));
-            
+
             otel.WithTracing(tracing =>
             {
                 tracing.AddAspNetCoreInstrumentation(options =>
@@ -56,19 +56,19 @@ namespace PlantBasedPizza.Shared
                         tracing.AddSource(source);
                     }
                 }
-                
+
                 tracing.AddOtlpExporter(otlpOptions =>
                 {
                     otlpOptions.Endpoint = new Uri(configuration["OTEL_EXPORTER_OTLP_ENDPOINT"] ?? OTEL_DEFAULT_GRPC_ENDPOINT);
                 });
             });
-            
+
             services.AddHttpContextAccessor();
 
             services.AddCors(options =>
             {
                 options.AddPolicy(name: CorsSettings.ALLOW_ALL_POLICY_NAME,
-                    policy  =>
+                    policy =>
                     {
                         policy.AllowAnyOrigin()
                             .AllowAnyHeader()
@@ -93,7 +93,7 @@ namespace PlantBasedPizza.Shared
                     {
                         Info = new Info(serviceName, "1.0.0"),
                     };
-                });   
+                });
             }
 
             return services;
@@ -102,19 +102,19 @@ namespace PlantBasedPizza.Shared
         public static WebApplication UseAsyncApi(this WebApplication app)
         {
             var generateAsyncApi = app.Configuration["Messaging:UseAsyncApi"] == "Y";
-            
+
             app.UseEndpoints(endpoints =>
             {
                 if (generateAsyncApi)
                 {
                     endpoints.MapAsyncApiDocuments();
-                    endpoints.MapAsyncApiUi();    
+                    endpoints.MapAsyncApiUi();
                 }
             });
-            
+
             return app;
         }
-        
+
         public static IApplicationBuilder UseSharedMiddleware(
             this IApplicationBuilder builder)
         {

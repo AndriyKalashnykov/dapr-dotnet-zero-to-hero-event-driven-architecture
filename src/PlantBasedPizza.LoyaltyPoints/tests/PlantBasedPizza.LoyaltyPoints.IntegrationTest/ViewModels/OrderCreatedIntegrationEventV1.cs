@@ -9,8 +9,8 @@ public class OrderCompletedIntegrationEventV1 : IntegrationEvent
     public override Uri Source => new Uri("https://loyaltytest.orders.plantbasedpizza");
 
     public string OrderIdentifier { get; set; }
-    
+
     public string CustomerIdentifier { get; set; }
-    
+
     public decimal OrderValue { get; set; }
 }

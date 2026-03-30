@@ -9,7 +9,7 @@ public class OrderDeliveredEventHandler(IOrderRepository orderRepository)
         var order = await orderRepository.Retrieve(evt.OrderIdentifier);
 
         order.CompleteOrder();
-            
+
         await orderRepository.Update(order).ConfigureAwait(false);
 
         return new OrderDto(order);

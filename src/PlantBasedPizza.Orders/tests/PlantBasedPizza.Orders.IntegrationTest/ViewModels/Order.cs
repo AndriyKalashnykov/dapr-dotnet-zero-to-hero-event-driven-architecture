@@ -6,7 +6,7 @@ namespace PlantBasedPizza.Orders.IntegrationTest.ViewModels
     {
         [JsonPropertyName("orderIdentifier")]
         public string OrderIdentifier { get; set; }
-        
+
         public string OrderNumber { get; set; }
 
         public DateTime OrderDate { get; set; }
@@ -22,13 +22,13 @@ namespace PlantBasedPizza.Orders.IntegrationTest.ViewModels
         public List<OrderHistory> History { get; set; }
 
         public int OrderType { get; set; }
-        
+
         [JsonPropertyName("customerIdentifier")]
 
         public string CustomerIdentifier { get; set; }
 
         public decimal TotalPrice { get; set; }
-        
+
         public bool AwaitingCollection { get; set; }
     }
 }

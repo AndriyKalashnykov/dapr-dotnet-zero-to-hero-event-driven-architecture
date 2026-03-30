@@ -25,25 +25,25 @@ namespace PlantBasedPizza.Kitchen.Infrastructure
             services.Configure<ServiceEndpoints>(configuration.GetSection("Services"));
             services.AddDaprClient();
             services.AddCaching(configuration);
-            
+
             BsonClassMap.RegisterClassMap<OutboxItem>(map =>
             {
                 map.AutoMap();
                 map.SetIgnoreExtraElements(true);
                 map.SetIgnoreExtraElementsIsInherited(true);
             });
-            
+
             BsonClassMap.RegisterClassMap<KitchenRequest>(map =>
             {
                 map.AutoMap();
                 map.SetIgnoreExtraElements(true);
                 map.SetIgnoreExtraElementsIsInherited(true);
             });
-            
+
             services.AddHttpClient("retry-http-client")
                 .SetHandlerLifetime(TimeSpan.FromMinutes(5))
                 .AddPolicyHandler(GetRetryPolicy());
-            
+
             // Add default gRPC retries
             var defaultMethodConfig = new MethodConfig
             {
@@ -57,7 +57,7 @@ namespace PlantBasedPizza.Kitchen.Infrastructure
                     RetryableStatusCodes = { StatusCode.Unavailable }
                 }
             };
-            
+
             services.AddGrpcClient<Orders.Internal.Orders.OrdersClient>(o =>
                 {
                     o.Address = new Uri(configuration["Services:OrdersInternal"]);
@@ -66,7 +66,7 @@ namespace PlantBasedPizza.Kitchen.Infrastructure
                 {
                     channel.ServiceConfig = new ServiceConfig() { MethodConfigs = { defaultMethodConfig } };
                 });
-            
+
             services.AddSingleton<IRecipeService, RecipeService>();
             services.AddSingleton<IOrderService, OrderService>();
             services.AddSingleton<IKitchenRequestRepository, KitchenRequestRepository>();
@@ -75,11 +75,11 @@ namespace PlantBasedPizza.Kitchen.Infrastructure
 
             return services;
         }
-        
+
         static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
         {
             var delay = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(1), retryCount: 5);
-            
+
             return HttpPolicyExtensions
                 .HandleTransientHttpError()
                 .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)

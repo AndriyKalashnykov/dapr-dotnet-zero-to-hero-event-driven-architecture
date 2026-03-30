@@ -10,7 +10,7 @@ namespace PlantBasedPizza.Delivery.UnitTests
     public class DeliveryRequestTests
     {
         internal const string OrderIdentifier = "ORDER123";
-        
+
         [Fact]
         public void CanCreateNewDeliveryRequest_ShouldCreate()
         {
@@ -21,7 +21,7 @@ namespace PlantBasedPizza.Delivery.UnitTests
             request.DeliveryAddress.AddressLine1.Should().Be("Address line 1");
             request.DeliveryAddress.Postcode.Should().Be("TY6 7UI");
         }
-        
+
         [Fact]
         public void CanCreateNewDeliveryRequestAddAddDriver_ShouldAddDriverAndRaiseEvent()
         {
@@ -32,7 +32,7 @@ namespace PlantBasedPizza.Delivery.UnitTests
             request.Driver.Should().Be("James");
             request.DriverCollectedOn.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(5));
         }
-        
+
         [Fact]
         public async Task OrderReadyForDeliveryHandler_ShouldStoreNewDeliveryRequest()
         {
@@ -53,10 +53,10 @@ namespace PlantBasedPizza.Delivery.UnitTests
                 DeliveryAddressLine5 = "AddressLine5",
                 Postcode = "Postcode"
             });
-            
+
             mockRepo.Verify(p => p.AddNewDeliveryRequest(It.IsAny<DeliveryRequest>(), It.IsAny<List<IntegrationEvent>>()), Times.Once);
         }
-        
+
         [Fact]
         public async Task OrderReadyForDeliveryHandlerImmutabilityCheck_ShouldSkipIfOrderAlreadyFound()
         {
@@ -65,7 +65,7 @@ namespace PlantBasedPizza.Delivery.UnitTests
                 .Verifiable();
             mockRepo.Setup(p => p.GetDeliveryStatusForOrder(It.IsAny<string>()))
                 .ReturnsAsync(new DeliveryRequest(OrderIdentifier, new Address("Address line 1", "TY6 7UI")));
-            
+
             var mockLogger = new Mock<ILogger<OrderReadyForDeliveryEventHandler>>();
 
             var handler = new OrderReadyForDeliveryEventHandler(mockRepo.Object, mockLogger.Object);
@@ -80,7 +80,7 @@ namespace PlantBasedPizza.Delivery.UnitTests
                 DeliveryAddressLine5 = "AddressLine5",
                 Postcode = "Postcode"
             });
-            
+
             mockRepo.Verify(p => p.AddNewDeliveryRequest(It.IsAny<DeliveryRequest>(), It.IsAny<List<IntegrationEvent>>()), Times.Never);
         }
     }

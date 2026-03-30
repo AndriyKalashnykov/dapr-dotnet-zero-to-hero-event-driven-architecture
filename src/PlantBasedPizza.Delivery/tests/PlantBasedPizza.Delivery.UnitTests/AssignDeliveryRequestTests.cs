@@ -13,7 +13,7 @@ public class AssignDeliveryRequestTests
         var repository = new Mock<IDeliveryRequestRepository>();
         repository.Setup(p => p.GetDeliveryStatusForOrder(It.IsAny<string>()))
             .ReturnsAsync(new DeliveryRequest("ORD123", new Address("add1", "BT67YU")));
-        
+
         var eventPublisher = new Mock<IDeliveryEventPublisher>();
 
         var handler = new AssignDriverRequestHandler(repository.Object);
@@ -27,12 +27,12 @@ public class AssignDeliveryRequestTests
         result.Should().NotBeNull();
         result.Driver.Should().Be("james");
     }
-    
+
     [Fact]
     public async Task ForOrderNotFound_ShouldReturnNull()
     {
         var repository = new Mock<IDeliveryRequestRepository>();
-        
+
         var eventPublisher = new Mock<IDeliveryEventPublisher>();
 
         var handler = new AssignDriverRequestHandler(repository.Object);
