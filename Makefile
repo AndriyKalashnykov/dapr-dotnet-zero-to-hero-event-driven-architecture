@@ -53,7 +53,7 @@ build: deps
 test: deps
 	@for proj in $$(find src -name '*UnitTest*.csproj'); do \
 		echo "Testing $$proj..."; \
-		dotnet test "$$proj" -c Release --verbosity normal || exit 1; \
+		dotnet run --project "$$proj" -c Release || exit 1; \
 	done
 
 #lint: @ Check code formatting
