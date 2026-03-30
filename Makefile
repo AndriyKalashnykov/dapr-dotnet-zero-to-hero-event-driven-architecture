@@ -49,9 +49,12 @@ restore: deps
 build: deps
 	@dotnet build PlantBasedPizza.sln -c Release --no-restore
 
-#test: @ Run all tests
+#test: @ Run unit tests
 test: deps
-	@dotnet test PlantBasedPizza.sln -c Release --no-build --verbosity normal
+	@for proj in $$(find src -name '*UnitTest*.csproj'); do \
+		echo "Testing $$proj..."; \
+		dotnet test "$$proj" -c Release --verbosity normal || exit 1; \
+	done
 
 #lint: @ Check code formatting
 lint: deps
