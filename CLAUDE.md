@@ -1,6 +1,6 @@
 # Plant Based Pizza
 
-C#/.NET 9 microservices application using Dapr for event-driven architecture.
+C#/.NET 10 microservices application using Dapr for event-driven architecture.
 
 ## Project Structure
 

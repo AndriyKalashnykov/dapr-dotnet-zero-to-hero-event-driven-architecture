@@ -8,20 +8,30 @@
     "github-actions",
     "nuget",
     "dockerfile",
+    "docker-compose",
     "npm",
     "dotnet-version"
   ],
   "labels": [
     "dependencies"
   ],
+  "commitMessagePrefix": "chore(all): ",
   "commitMessageAction": "update",
   "commitBody": "Signed-off-by: Renovate Bot <bot@renovateapp.com>",
   "prConcurrentLimit": 50,
   "prHourlyLimit": 0,
   "platformAutomerge": true,
   "automerge": true,
+  "automergeType": "branch",
   "automergeStrategy": "squash",
   "ignoreTests": false,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true
+  },
+  "npm": {
+    "minimumReleaseAge": "3 days"
+  },
   "vulnerabilityAlerts": {
     "labels": [
       "security"
@@ -60,20 +70,6 @@
       ]
     },
     {
-      "description": "Group ApplicationInsights packages",
-      "groupName": "ApplicationInsights",
-      "matchPackageNames": [
-        "/ApplicationInsights/"
-      ]
-    },
-    {
-      "description": "Group System.CommandLine packages",
-      "groupName": "System.CommandLine",
-      "matchPackageNames": [
-        "System.CommandLine{/,}**"
-      ]
-    },
-    {
       "description": "Group XUnit test dependencies",
       "groupName": "XUnit",
       "matchPackageNames": [
@@ -86,6 +82,26 @@
       "matchPackageNames": [
         "/^Dapr/"
       ]
+    },
+    {
+      "description": "Group devDependencies non-major updates",
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "groupName": "dev-dependencies",
+      "automerge": true
+    },
+    {
+      "description": "Group type definitions",
+      "matchPackageNames": [
+        "/^@types\\//"
+      ],
+      "groupName": "type-definitions",
+      "automerge": true
     }
   ]
 }
