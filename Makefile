@@ -76,6 +76,14 @@ lint: deps
 format: deps
 	@dotnet format $(SOLUTION) --verbosity quiet
 
+#lint-dockerfiles: @ Lint all Dockerfiles with hadolint
+lint-dockerfiles: deps-hadolint
+	@echo "=== Linting Dockerfiles ==="
+	@fail=0; for f in $$(find src -name 'Dockerfile*'); do \
+		echo "  $$f"; hadolint "$$f" || fail=1; \
+	done; [ $$fail -eq 0 ]
+	@echo "=== Dockerfile linting passed ==="
+
 #deps-prune: @ Detect unused and redundant dependencies
 deps-prune:
 	@echo "=== Dependency Pruning ==="
@@ -172,7 +180,7 @@ run-local:
 	@docker compose up -d && sleep 10 && docker compose -f docker-compose-services.yml up -d
 
 .PHONY: help deps deps-act deps-hadolint renovate-bootstrap renovate-validate \
-	clean restore build test lint format deps-prune deps-prune-check ci ci-run release \
+	clean restore build test lint format lint-dockerfiles deps-prune deps-prune-check ci ci-run release \
 	image-build image-build-account image-build-delivery image-build-kitchen image-build-loyalty-points \
 	image-build-orders image-build-payments image-build-recipes image-build-frontend \
 	image-build-arm image-build-account-arm image-build-delivery-arm image-build-kitchen-arm \
